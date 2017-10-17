@@ -1,0 +1,13 @@
+{
+    "name": "ajthinking/tinx",
+    "description": "Inject cool stuff into tinker.",
+    "type": "laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anders Jürisoo",
+            "email": "jurisoo@hotmail.com"
+        }
+    ],
+    "require": {}
+}
