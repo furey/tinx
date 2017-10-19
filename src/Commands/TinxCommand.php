@@ -45,12 +45,11 @@ class TinxCommand extends Command
 
         do {
             State::reset();
-            IncludeManager::autoInclude(Model::all());
+            IncludeManager::prepare(Model::all());
 
             Artisan::call('tinker', [
                 'include' => [
-                    'packages/ajthinking/tinx/src/Includes/Restarter.php',
-                    //'storage/TinxAutoInclude.php'
+                    'storage/TinxIncludes.php'
                 ]
             ]);
                                     
