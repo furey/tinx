@@ -1,6 +1,8 @@
 # Laravel Tinx
 Inject cool stuff into laravels tinker
 
+<img src="https://i.imgur.com/tCmU1CF.gif" title="source: imgur.com" />
+
 ## Installation
 
     composer require ajthinking/tinx
