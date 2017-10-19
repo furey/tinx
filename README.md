@@ -1,5 +1,5 @@
 # Laravel Tinx
-Inject cool stuff into laravels tinker
+Inject cool stuff into laravels tinker and make it restartable.
 
 <img src="https://i.imgur.com/tCmU1CF.gif" title="source: imgur.com" />
 
@@ -35,9 +35,10 @@ Lets say you have two models ```Car``` and ```Crocodile```. Tinx will then prepa
 Please post issues and send PR:s. 
 
 ### Suggested improvment
-* Guard against collision with PHP-built-in-functions and tinx specific re() and names()
+* Guard against collision with PHP-built-in-functions and tinx specific re() and names().
 * CamelCase naming strategy (CloudInstanceManager -> $cim )
 * Add tests (this package is untested :/ )
+* Eloquent should support static calls to getColumnListing. Workaround? 
 
 ## License
 MIT

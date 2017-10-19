@@ -1,6 +1,6 @@
 {
     "name": "ajthinking/tinx",
-    "description": "Inject cool stuff into tinker.",
+    "description": "Inject cool stuff into laravels tinker and make it restartable.",
     "type": "laravel",
     "license": "MIT",
     "authors": [
@@ -9,5 +9,17 @@
             "email": "jurisoo@hotmail.com"
         }
     ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ajthinking\\Tinx\\TinxServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Ajthinking\\Tinx\\": "src/"
+        }
+    },    
     "require": {}
 }

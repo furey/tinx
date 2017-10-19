@@ -19,13 +19,18 @@ function names()
 // Helper to handle all u(x) calls
 function getQueryInstance($class, $input)
 {
-    // INT -> use find
+    // Int -> use find
     if(is_int($input)) {
         return $class::find($input);
     }
     // String -> search all columns
-    if(is_string($input)) {        
-        $columns = ["email", "name"];
+    if(is_string($input)) {
+        if($class::first() == null)
+        {
+            throw new Exception("You can only search where there is data. There is no way for Tinx to get a column listing for a model without an existing instance...");
+        }
+
+        $columns = Schema::getColumnListing($class::first()->getTable());
         
         $query = $class::select('*');
         
