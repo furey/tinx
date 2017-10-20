@@ -36,7 +36,7 @@ function getQueryInstance($class, $input)
         
         foreach($columns as $column)
         {
-          $query->orWhere($column, '=', $input);
+          $query->orWhere($column, 'like', '%' . $input . '%');
         }
         
         return $query->get();        
