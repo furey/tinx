@@ -1,8 +1,7 @@
 # Laravel Tinx
 [![Latest Stable Version](https://poser.pugx.org/ajthinking/tinx/v/stable)](https://packagist.org/packages/ajthinking/tinx)
 [![Total Downloads](https://poser.pugx.org/ajthinking/tinx/downloads)](https://packagist.org/packages/ajthinking/tinx)
-[![License](https://poser.pugx.org/ajthinking/tinx/license)](https://packagist.org/packages/ajthinking/tinx)
-[![composer.lock](https://poser.pugx.org/ajthinking/tinx/composerlock)](https://packagist.org/packages/ajthinking/tinx)
+/[![License](https://poser.pugx.org/ajthinking/tinx/license)](https://packagist.org/packages/ajthinking/tinx)
 <br>Reload your [Laravel Tinker](https://github.com/laravel/tinker) session from inside tinker... AND get automatic super shortcuts for first(), find(), search, and more!
 
 <img src="https://i.imgur.com/tCmU1CF.gif" title="source: imgur.com" />
