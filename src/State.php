@@ -4,11 +4,6 @@ namespace Ajthinking\Tinx;
 
 class State
 {
-    public function __construct() 
-    {
-
-    }
-
     public static function shouldRestart()
     {
         return State::getStateFileMessage() == "RESTART";
