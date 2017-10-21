@@ -7,7 +7,6 @@ class NamingStrategy
     public static function shortestUnique($models) {
         $modelCollection = new ModelCollection($models);
         $names = [];
-        //dd($models);
         foreach($models as $model)
         {
             for ($i = 1; $i <= strlen($model->slug); $i++) {                
