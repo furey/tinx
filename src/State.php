@@ -13,12 +13,12 @@ class State
     {
         State::setStateFileMessage("RESTART");
     }
-    
+
     public static function reset()
     {
         State::setStateFileMessage("TAKE_NO_ACTION");
     }
-    
+
     public static function setStateFileMessage($message)
     {
         $file = fopen("storage/tinx.state", "w") or die("Unable to open tinx state file!");
@@ -31,9 +31,7 @@ class State
     {
         $file = fopen("storage/tinx.state", "r") or die("Unable to open tinx state file!");
         $message = fgets($file);
-        fclose($file);        
+        fclose($file);
         return $message;
-    }    
+    }
 }
-
-

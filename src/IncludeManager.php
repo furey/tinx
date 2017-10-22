@@ -12,30 +12,30 @@ class IncludeManager
         IncludeManager::prepareIncludesFile($names);
     }
 
-    public static function prepareIncludesFile($names) 
+    public static function prepareIncludesFile($names)
     {
         $template = file_get_contents(__DIR__ . "/Stubs/TinxIncludes.php");
         $FIRST_MODEL_INSTANCE_VARIABLES = "";
         $MODEL_FUNCTIONS = "";
         foreach($names as $class => $name)
-        {   
+        {
             $FIRST_MODEL_INSTANCE_VARIABLES .= '$' . $name . ' = ' . $class . "::first();" . "\n";
             $MODEL_FUNCTIONS                .= 'function ' . $name . '($input = null) { return getQueryInstance("'. $class .'", $input);}' . "\n";
         }
-        
+
         $replacementPairs = [
             '$FIRST_MODEL_INSTANCE_VARIABLES$' => $FIRST_MODEL_INSTANCE_VARIABLES,
             '$MODEL_FUNCTIONS$' => $MODEL_FUNCTIONS,
             '$TINX_NAMES$' => '$names = ' . var_export($names, true) . ';'
         ];
-        $filledTemplate = IncludeManager::fill_template($replacementPairs, $template); 
+        $filledTemplate = IncludeManager::fill_template($replacementPairs, $template);
         $file = fopen("storage/TinxIncludes.php", "w") or die("Unable to open tinx include file!");
         fwrite($file, $filledTemplate);
-        fclose($file);        
+        fclose($file);
         return true;
     }
 
-    
+
     public static function fill_template($variables, $template)
     {
         foreach ($variables as $variable => $value) {
@@ -44,5 +44,3 @@ class IncludeManager
         return $template;
     }
 }
-
-

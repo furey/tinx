@@ -14,9 +14,9 @@ class TinxServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {        
+    {
         $this->commands([
-            TinxCommand::class            
+            TinxCommand::class
         ]);
     }
 
@@ -27,6 +27,6 @@ class TinxServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        //
     }
 }

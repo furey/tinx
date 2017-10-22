@@ -9,13 +9,13 @@ class NamingStrategy
         $names = [];
         foreach($models as $model)
         {
-            for ($i = 1; $i <= strlen($model->slug); $i++) {                
-                $nameCandidate = substr($model->slug, 0, $i);                                
-                if(!$modelCollection->hasSeveralLike($nameCandidate)  && !function_exists($nameCandidate) && $nameCandidate != "names" && $nameCandidate != "re") {                    
+            for ($i = 1; $i <= strlen($model->slug); $i++) {
+                $nameCandidate = substr($model->slug, 0, $i);
+                if(!$modelCollection->hasSeveralLike($nameCandidate)  && !function_exists($nameCandidate) && $nameCandidate != "names" && $nameCandidate != "re") {
                     $names[$model->classWithFullNamespace] = $nameCandidate;
                     break;
                 }
-            }            
+            }
         }
         return $names;
     }
@@ -26,7 +26,7 @@ class ModelCollection
    public function __construct($models) {
         $this->models = $models;
    }
-   
+
    public function hasSeveralLike($nameCandidate)
    {
        $matches = 0;
