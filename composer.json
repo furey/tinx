@@ -21,5 +21,7 @@
             "Ajthinking\\Tinx\\": "src/"
         }
     },    
-    "require": {}
+    "require": {
+        "laravel/tinker": "~1.0"
+    }
 }
