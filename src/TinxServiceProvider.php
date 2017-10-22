@@ -15,6 +15,10 @@ class TinxServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../config/tinx.php' => config_path('tinx.php'),
+        ], 'config');
+
         $this->commands([
             TinxCommand::class
         ]);
@@ -27,6 +31,6 @@ class TinxServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(__DIR__ . '/../config/tinx.php', 'tinx');
     }
 }

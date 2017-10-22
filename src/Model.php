@@ -13,11 +13,7 @@ class Model
 
     public static function all()
     {
-        // This should be moved to a publishable config file
-        $namespacesAndPaths = [
-            "App" => "/app",
-            "App\Models" => "/app/Models"
-        ];
+        $namespacesAndPaths = config('tinx.namespaces_and_paths');
 
         $models = collect();
 
