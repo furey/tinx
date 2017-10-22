@@ -15,7 +15,7 @@ Thats it. This package supports Laravel [Package Discovery](https://laravel.com/
     php artisan tinx
 
 ### Reload your tinker session
-    re() 
+    re()
 This will allow you to immediatly test out your changes.
 
 ### Magic models
@@ -35,7 +35,7 @@ The naming conventions are decided by a strategy function, for instance "shortes
 Lets say you have two models ```Car``` and ```Crocodile```. Tinx will then prepare the following variables and functions: ```$ca```, ```ca()```, ```$cr```, ```cr()```.
 
 ## Contributing
-Please post issues and send PR:s. 
+Please post issues and send PR:s.
 
 ### Suggested improvment
 * CamelCase naming strategy (CloudInstanceManager -> $cim )

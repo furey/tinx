@@ -12,7 +12,7 @@ $TINX_NAMES$
 
 // Return quick reference array
 function names()
-{    
+{
     return $TINX_NAMES$
 }
 
@@ -31,15 +31,15 @@ function getQueryInstance($class, $input)
         }
 
         $columns = Schema::getColumnListing($class::first()->getTable());
-        
+
         $query = $class::select('*');
-        
+
         foreach($columns as $column)
         {
           $query->orWhere($column, 'like', '%' . $input . '%');
         }
-        
-        return $query->get();        
+
+        return $query->get();
     }
 
     // Catch other stuff

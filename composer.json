@@ -20,7 +20,7 @@
         "psr-4": {
             "Ajthinking\\Tinx\\": "src/"
         }
-    },    
+    },
     "require": {
         "laravel/tinker": "~1.0"
     }

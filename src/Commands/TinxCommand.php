@@ -41,7 +41,7 @@ class TinxCommand extends Command
      */
     public function handle()
     {
-        $this->info("Tinx - something awesome is about to happen.");               
+        $this->info("Tinx - something awesome is about to happen.");
 
         do {
             State::reset();
@@ -52,12 +52,9 @@ class TinxCommand extends Command
                     'storage/TinxIncludes.php'
                 ]
             ]);
-                                    
+
         } while (State::shouldRestart() && !$this->info("Reloading your tinker session."));
 
         State::reset();
-
-
-    }   
-   
+    }
 }
