@@ -11,7 +11,7 @@ class NamingStrategy
         {
             for ($i = 1; $i <= strlen($model->slug); $i++) {
                 $nameCandidate = substr($model->slug, 0, $i);
-                if(!$modelCollection->hasSeveralLike($nameCandidate)  && !function_exists($nameCandidate) && $nameCandidate != "names" && $nameCandidate != "re") {
+                if(!$modelCollection->hasSeveralLike($nameCandidate)  && !function_exists($nameCandidate) && $nameCandidate != "names" && $nameCandidate != "re" && $nameCandidate != "do") {
                     $names[$model->classWithFullNamespace] = $nameCandidate;
                     break;
                 }
