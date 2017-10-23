@@ -7,7 +7,7 @@ class IncludeManager
 {
     public static function prepare($models)
     {
-        $strategy = "shortestUnique"; // Move to config
+        $strategy = config('tinx.strategy');
         $names = NamingStrategy::$strategy($models);
         IncludeManager::prepareIncludesFile($names);
     }
