@@ -55,5 +55,8 @@ function getQueryInstance($class, $input)
 // Insert "first" variables, $u etc
 $FIRST_MODEL_INSTANCE_VARIABLES$
 
+// Insert "last" variables, $u_ etc
+$LAST_MODEL_INSTANCE_VARIABLES$
+
 // Insert model functions
 $MODEL_FUNCTIONS$
