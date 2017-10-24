@@ -27,10 +27,13 @@ class Model
                     if ($result === '.' or $result === '..') continue;
                     $filename = $fullBasePath . '/' . $result;
                     if (is_dir($filename)) {
-                        // This requires only model files to be present in subfolders, anything else will brake it.
+                        // This requires only model files to be present in subfolders, anything else will break it.
                         //$models = array_merge($models, $this->models($filename));
                     }else{
                         $class = $namespace . '\\' . substr($result,0,-4);
+                        if ((new \ReflectionClass($class))->isAbstract()) {
+                            continue;
+                        }
                         $models->push(new Model($class));
 
                     }
