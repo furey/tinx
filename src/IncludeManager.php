@@ -29,9 +29,7 @@ class IncludeManager
             '$TINX_NAMES$' => '$names = ' . var_export($names, true) . ';'
         ];
         $filledTemplate = IncludeManager::fill_template($replacementPairs, $template);
-        $file = fopen("storage/TinxIncludes.php", "w") or die("Unable to open tinx include file!");
-        fwrite($file, $filledTemplate);
-        fclose($file);
+        resolve('tinx.storage')->put('includes.php', $filledTemplate);
         return true;
     }
 

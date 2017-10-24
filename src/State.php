@@ -21,17 +21,12 @@ class State
 
     public static function setStateFileMessage($message)
     {
-        $file = fopen("storage/tinx.state", "w") or die("Unable to open tinx state file!");
-        fwrite($file, $message);
-        fclose($file);
+        resolve('tinx.storage')->put('state', $message);
         return $message;
     }
 
     public static function getStateFileMessage()
     {
-        $file = fopen("storage/tinx.state", "r") or die("Unable to open tinx state file!");
-        $message = fgets($file);
-        fclose($file);
-        return $message;
+        return resolve('tinx.storage')->get('state');
     }
 }
