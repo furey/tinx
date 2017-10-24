@@ -22,7 +22,7 @@ class IncludeManager
         {
             $FIRST_MODEL_INSTANCE_VARIABLES .= '$' . $name . ' = ' . $class . "::first();" . "\n";
             $LAST_MODEL_INSTANCE_VARIABLES .= '$' . $name . '_ = ' . $class . "::latest()->first();" . "\n";
-            $MODEL_FUNCTIONS                .= 'function ' . $name . '($input = null) { return getQueryInstance("'. $class .'", $input);}' . "\n";
+            $MODEL_FUNCTIONS                .= 'function ' . $name . '($input1 = "TINX_IGNORE_VALUE", $input2 = "TINX_IGNORE_VALUE", $input3 = "TINX_IGNORE_VALUE") { return getQueryInstance("'. $class .'", $input1, $input2, $input3);}' . "\n";
         }
 
         $replacementPairs = [

@@ -28,9 +28,11 @@ Tinx sniffs your models and prepare the following shortcuts.
 | `$u_`             | `App\User::latest()->first()`             |
 | `$c`              | `App\Models\Car::first()`                 |
 | `u(3)`            | `App\User::find(3)`                       |
-| `u("gmail")`      | `Where "gmail" is found in any column.`   |
+| `u("gmail")`      | `Where "%gmail%" is found in any column.`   |
+| `u("mail", "jon@snow.com")`      | `App\User::where("mail", "jon@snow.com")`   |
+| `u("id", ">", 0)`      | `App\User::where("id", ">", 0)`   |
 | `u()`             | `"App\User"`                              |
-| `u()::where(...)` | `App\User::where(...)`                    |
+| `u()::whereRaw(...)` | `App\User::whereRaw(...)`                    |
 
 The naming conventions are decided by a strategy function, for instance "shortestUnique".
 Lets say you have two models `Car` and `Crocodile`. Tinx will then prepare the following variables and functions: `$ca`, `$ca_`, `ca()`, `$cr`, `$cr_`, `cr()`.
