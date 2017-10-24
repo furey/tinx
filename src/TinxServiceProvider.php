@@ -43,7 +43,7 @@ class TinxServiceProvider extends ServiceProvider
     private function configureStorageDisk()
     {
         config([
-            'filesystems.disks.tinx' => config('tinx.storage.disk', [
+            'filesystems.disks.tinx' => config('filesystems.disks.tinx', [
                 'driver' => 'local',
                 'root' => storage_path('tinx'),
             ]),
