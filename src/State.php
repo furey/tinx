@@ -21,12 +21,12 @@ class State
 
     public static function setStateFileMessage($message)
     {
-        resolve('tinx.storage')->put('state', $message);
+        app('tinx.storage')->put('state', $message);
         return $message;
     }
 
     public static function getStateFileMessage()
     {
-        return resolve('tinx.storage')->get('state');
+        return app('tinx.storage')->get('state');
     }
 }

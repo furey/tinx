@@ -32,7 +32,7 @@ class IncludeManager
             '$TINX_NAMES$' => '$names = ' . var_export($names, true) . ';'
         ];
         $filledTemplate = IncludeManager::fill_template($replacementPairs, $template);
-        resolve('tinx.storage')->put('includes.php', $filledTemplate);
+        app('tinx.storage')->put('includes.php', $filledTemplate);
         return true;
     }
 
