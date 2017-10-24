@@ -16,15 +16,18 @@ class IncludeManager
     {
         $template = file_get_contents(__DIR__ . "/Stubs/TinxIncludes.php");
         $FIRST_MODEL_INSTANCE_VARIABLES = "";
+        $LAST_MODEL_INSTANCE_VARIABLES = "";
         $MODEL_FUNCTIONS = "";
         foreach($names as $class => $name)
         {
             $FIRST_MODEL_INSTANCE_VARIABLES .= '$' . $name . ' = ' . $class . "::first();" . "\n";
+            $LAST_MODEL_INSTANCE_VARIABLES .= '$' . $name . '_ = ' . $class . "::latest()->first();" . "\n";
             $MODEL_FUNCTIONS                .= 'function ' . $name . '($input = null) { return getQueryInstance("'. $class .'", $input);}' . "\n";
         }
 
         $replacementPairs = [
             '$FIRST_MODEL_INSTANCE_VARIABLES$' => $FIRST_MODEL_INSTANCE_VARIABLES,
+            '$LAST_MODEL_INSTANCE_VARIABLES$' => $LAST_MODEL_INSTANCE_VARIABLES,
             '$MODEL_FUNCTIONS$' => $MODEL_FUNCTIONS,
             '$TINX_NAMES$' => '$names = ' . var_export($names, true) . ';'
         ];
