@@ -49,7 +49,7 @@ class TinxCommand extends Command
 
             Artisan::call('tinker', [
                 'include' => [
-                    'storage/TinxIncludes.php'
+                    resolve('tinx.storage')->path('includes.php')
                 ]
             ]);
 
