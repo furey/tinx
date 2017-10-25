@@ -1,6 +1,6 @@
 <?php
 
-namespace Ajthinking\Tinx\Commands;
+namespace Ajthinking\Tinx;
 
 use Illuminate\Console\Command;
 use Ajthinking\Tinx\Model;
@@ -46,13 +46,11 @@ class TinxCommand extends Command
         do {
             State::reset();
             IncludeManager::prepare(Model::all());
-
             Artisan::call('tinker', [
                 'include' => [
                     app('tinx.storage')->path('includes.php')
                 ]
             ]);
-
         } while (State::shouldRestart() && !$this->info("Reloading your tinker session."));
 
         State::reset();

@@ -14,7 +14,10 @@ class Model
 
     public static function all()
     {
-        $namespacesAndPaths = config('tinx.namespaces_and_paths');
+        $namespacesAndPaths = config('tinx.namespaces_and_paths', [
+            'App' => '/app',
+            'App\Models' => '/app/Models',
+        ]);
 
         $models = collect();
 
@@ -25,8 +28,7 @@ class Model
                 foreach ($results as $result) {
                     $filename = $fullBasePath . '/' . $result;
                     if (is_dir($filename)) {
-                        // This requires only model files to be present in subfolders, anything else will break it.
-                        //$models = array_merge($models, $this->models($filename));
+                        // Only model files may be present in subfolders; anything else will break it.
                     } else {
                         $class = $namespace . '\\' . substr($result, 0, -4);
                         if ((new \ReflectionClass($class))->isAbstract()) {
