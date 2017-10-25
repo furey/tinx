@@ -3,7 +3,7 @@
 namespace Ajthinking\Tinx;
 
 use Illuminate\Support\ServiceProvider;
-use Ajthinking\Tinx\Commands\TinxCommand;
+use Ajthinking\Tinx\TinxCommand;
 
 class TinxServiceProvider extends ServiceProvider
 {

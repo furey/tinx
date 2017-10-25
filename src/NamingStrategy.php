@@ -12,6 +12,7 @@ class NamingStrategy
         // used by tinx
         're', 'names', 'getQueryInstance'
     ];
+    
     public static function shortestUnique($models) {
         $modelCollection = new ModelCollection($models);
         $names = [];
