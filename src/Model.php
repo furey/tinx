@@ -2,6 +2,9 @@
 
 namespace Ajthinking\Tinx;
 
+use Exception;
+use ReflectionClass;
+
 class Model
 {
     public function __construct($classWithFullNamespace)
@@ -27,19 +30,18 @@ class Model
                 $results = self::nonHiddenFiles($fullBasePath);
                 foreach ($results as $result) {
                     $filename = $fullBasePath . '/' . $result;
-                    if (is_dir($filename)) {
-                        // Only model files may be present in subfolders; anything else will break it.
-                    } else {
+                    // Only model files may be present in subfolders; anything else will break it.
+                    if (!is_dir($filename)) {
                         $class = $namespace . '\\' . substr($result, 0, -4);
-                        if ((new \ReflectionClass($class))->isAbstract()) {
+                        if (!self::validateClass($class)) {
                             continue;
                         }
                         $models->push(new Model($class));
-
                     }
                 }
             }
         }
+
         return $models;
     }
 
@@ -50,6 +52,23 @@ class Model
     private static function nonHiddenFiles($fullBasePath)
     {
         return preg_grep('/^([^.|^~])/', scandir($fullBasePath));
+    }
+
+    /**
+     * @param string $class
+     * @return bool
+     * */
+    private static function validateClass($class)
+    {
+        try {
+            if ((new ReflectionClass($class))->isAbstract()) {
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return true;
     }
 
     public function empty()
@@ -73,10 +92,5 @@ class Model
                 $this->sample()->getHidden()
             )
         );
-    }
-
-    public function hasTable()
-    {
-        //
     }
 }
