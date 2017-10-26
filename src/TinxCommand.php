@@ -16,7 +16,8 @@ class TinxCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'tinx {include?*}';
+    protected $signature = 'tinx
+                            {include?* : Include file(s) before starting tinker}';
 
     /**
      * The console command description.
@@ -47,16 +48,9 @@ class TinxCommand extends Command
         do {
             State::reset();
             $this->rebootConfig();
-            IncludeManager::prepare(Model::all());
-            Artisan::call('tinker', [
-                'include' => array_merge(
-                    // magic functions and variables
-                    [ app('tinx.storage')->path('includes.php') ],
-                    // files included by the user as command argument(s)
-                    $this->argument('include')
-                ) 
-            ]);
-        } while (State::shouldRestart() && !$this->info("Reloading your tinker session."));
+            $this->createTinxIncludes();
+            $this->callTinker();
+        } while (State::shouldRestart() && !$this->info("Reloading your tinker session..."));
 
         State::reset();
     }
@@ -67,5 +61,38 @@ class TinxCommand extends Command
     private function rebootConfig()
     {
         app('Illuminate\Foundation\Bootstrap\LoadConfiguration')->bootstrap($this->laravel);
-    }  
+    }
+
+    /**
+     * @return void
+     * */
+    private function createTinxIncludes()
+    {
+        IncludeManager::prepare(Model::all());
+    }
+
+    /**
+     * @return void
+     * */
+    private function callTinker()
+    {
+        Artisan::call('tinker', ['include' => $this->getTinkerIncludes()]);
+    }
+
+    /**
+     * @return array
+     * */
+    private function getTinkerIncludes()
+    {
+        // Magic functions and variables.
+        $tinxIncludes = [
+            app('tinx.storage')->path('includes.php')
+        ];
+
+        // Files included by the user as command argument(s).
+        // e.g. "php artisan tinx include-1.php /path/to/include-2.php etc.php"
+        $userIncludes = $this->argument('include') ?: [];
+
+        return array_merge($tinxIncludes, $userIncludes);
+    }
 }
