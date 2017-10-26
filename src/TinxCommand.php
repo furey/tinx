@@ -45,6 +45,7 @@ class TinxCommand extends Command
 
         do {
             State::reset();
+            $this->rebootConfig();
             IncludeManager::prepare(Model::all());
             Artisan::call('tinker', [
                 'include' => [
@@ -54,5 +55,13 @@ class TinxCommand extends Command
         } while (State::shouldRestart() && !$this->info("Reloading your tinker session."));
 
         State::reset();
+    }
+
+    /**
+     * @return void
+     * */
+    private function rebootConfig()
+    {
+        app('Illuminate\Foundation\Bootstrap\LoadConfiguration')->bootstrap($this->laravel);
     }
 }
