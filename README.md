@@ -37,10 +37,10 @@ Tinx sniffs your models and prepare the following shortcuts.
 The naming conventions are decided by a strategy function, for instance "shortestUnique".
 Lets say you have two models `Car` and `Crocodile`. Tinx will then prepare the following variables and functions: `$ca`, `$ca_`, `ca()`, `$cr`, `$cr_`, `cr()`.
 
-To see the names assigned for your session just call the function ```names()```
+To see the names assigned for your session just call the function `names()`.
 
 ## Contributing
-Please post issues and send PR:s.
+Please post issues and send PRs.
 
 ### Suggested improvment
 * CamelCase naming strategy (CloudInstanceManager -> $cim )

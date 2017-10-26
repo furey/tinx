@@ -42,7 +42,7 @@ class Model
             }
         }
 
-        return $models;
+        return self::filterModels($models);
     }
 
     /**
@@ -69,6 +69,27 @@ class Model
         }
 
         return true;
+    }
+
+    /**
+     * @param Collection $models
+     * @return Collection
+     * */
+    private static function filterModels($models)
+    {
+        if (($only = config('tinx.only', [])) && is_array($only) && count($only)) {
+            $models = $models->filter(function ($model) use ($only) {
+                return in_array($model->classWithFullNamespace, $only);
+            });
+        }
+
+        if (($except = config('tinx.except', [])) && is_array($except) && count($except)) {
+            $models = $models->reject(function ($model) use ($except) {
+                return in_array($model->classWithFullNamespace, $except);
+            });
+        }
+
+        return $models;
     }
 
     public function empty()
