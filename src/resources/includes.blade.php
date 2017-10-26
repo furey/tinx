@@ -1,23 +1,17 @@
 use Ajthinking\Tinx\State;
 
+array_set($GLOBALS, 'tinx.names', {!! var_export($names); !!});
+
+function forgetName($class) {
+    array_forget($GLOBALS, "tinx.names.$class");
+}
+
 /**
  * The function used to restart tinker.
  * */
 function re() {
     State::requestRestart();
     exit();
-}
-
-/**
- * Quick reference array.
- * */
-$names = {!! var_export($names); !!};
-
-/**
- * Return quick reference array.
- * */
-function names() {
-    return {!! var_export($names); !!};
 }
 
 /**
@@ -79,8 +73,8 @@ function getQueryInstance($class, ...$args)
 
 /**
  * Insert "first" and "last" variables (e.g. '$u', '$u_', etc) and model functions (e.g. 'u()', etc).
- * For "first" variable, returns "::first()" if class DB table exists, otherwise "new".
- * For "last" variable, returns "::latest()->first()" if class DB table exists, otherwise "new".
+ * For "first" variable, returns "::first()" if class DB table exists, otherwise "new" (if 'tableless_models' set to true).
+ * For "last" variable, returns "::latest()->first()" if class DB table exists, otherwise "new" (if 'tableless_models' set to true).
  * */
 $latestColumn = config('tinx.latest_column', 'created_at');
 @foreach ($names as $class => $name)
@@ -93,7 +87,28 @@ try {
         }
     }
 } catch (\Illuminate\Database\QueryException $e) {
+    @if (array_get($config, 'tableless_models'))
     ${!! $name !!} = new {!! $class !!};
     ${!! $name !!}_ = new {!! $class !!};
+    if (!function_exists('{!! $name !!}')) {
+        function {!! $name !!}(...$args) {
+            return '{!! $class !!}';
+        }
+    }
+    @else
+    forgetName('{!! $class !!}');
+    @endif
 }
 @endforeach
+
+/**
+ * Return quick reference array.
+ * */
+function names() {
+    return array_get($GLOBALS, 'tinx.names');
+}
+
+/**
+ * Quick reference array.
+ * */
+$names = names();
