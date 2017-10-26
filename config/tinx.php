@@ -40,5 +40,13 @@ return [
      * If true, models without database tables will also be defined.
      * */
     'tableless_models' => false,
+
+    /**
+     * Include these file(s) before starting tinker.
+     * */
+    'include' => [
+        // include/this/file.php,
+        // also/include/this/file.php,
+    ],
     
 ];

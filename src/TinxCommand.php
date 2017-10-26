@@ -91,8 +91,11 @@ class TinxCommand extends Command
 
         // Files included by the user as command argument(s).
         // e.g. "php artisan tinx include-1.php /path/to/include-2.php etc.php"
-        $userIncludes = $this->argument('include') ?: [];
+        $commandIncludes = $this->argument('include') ?: [];
 
-        return array_merge($tinxIncludes, $userIncludes);
+        // Files includes by the user via config.
+        $configIncludes = config('tinx.include', []);
+
+        return array_merge($tinxIncludes, $commandIncludes, $configIncludes);
     }
 }
