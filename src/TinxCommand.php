@@ -7,6 +7,7 @@ use Ajthinking\Tinx\Model;
 use Ajthinking\Tinx\State;
 use Ajthinking\Tinx\IncludeManager;
 use Artisan;
+use Symfony\Component\Console\Input\InputArgument;
 
 class TinxCommand extends Command
 {
@@ -15,7 +16,7 @@ class TinxCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'tinx';
+    protected $signature = 'tinx {include?*}';
 
     /**
      * The console command description.
@@ -48,9 +49,12 @@ class TinxCommand extends Command
             $this->rebootConfig();
             IncludeManager::prepare(Model::all());
             Artisan::call('tinker', [
-                'include' => [
-                    app('tinx.storage')->path('includes.php')
-                ]
+                'include' => array_merge(
+                    // magic functions and variables
+                    [ app('tinx.storage')->path('includes.php') ],
+                    // files included by the user as command argument(s)
+                    $this->argument('include')
+                ) 
             ]);
         } while (State::shouldRestart() && !$this->info("Reloading your tinker session."));
 
@@ -63,5 +67,5 @@ class TinxCommand extends Command
     private function rebootConfig()
     {
         app('Illuminate\Foundation\Bootstrap\LoadConfiguration')->bootstrap($this->laravel);
-    }
+    }  
 }
