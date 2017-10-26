@@ -49,7 +49,7 @@ class Model
      */
     private static function nonHiddenFiles($fullBasePath)
     {
-        return preg_grep('/^([^.])/', scandir($fullBasePath));
+        return preg_grep('/^([^.|^~])/', scandir($fullBasePath));
     }
 
     public function empty()
