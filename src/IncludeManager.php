@@ -19,7 +19,8 @@ class IncludeManager
      * */
     public static function prepareIncludesFile($names)
     {
-        $contents = view()->file(__DIR__.'/resources/includes.blade.php', compact('names'))->render();
+        $config = config('tinx');
+        $contents = view()->file(__DIR__.'/resources/includes.blade.php', compact('names', 'config'))->render();
         $contentsWithPhpTag = '<?php'.PHP_EOL.PHP_EOL.$contents;
         app('tinx.storage')->put('includes.php', $contentsWithPhpTag);
     }

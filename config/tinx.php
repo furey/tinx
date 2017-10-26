@@ -10,5 +10,7 @@ return [
     'strategy' => 'shortestUnique',
 
     'latest_column' => 'created_at',
+
+    'tableless_models' => false,
     
 ];
