@@ -3,7 +3,6 @@
 namespace Ajthinking\Tinx;
 
 use Exception;
-use ReflectionClass;
 
 class Model
 {
@@ -33,7 +32,7 @@ class Model
                     // Only model files may be present in subfolders; anything else will break it.
                     if (!is_dir($filename)) {
                         $class = $namespace . '\\' . substr($result, 0, -4);
-                        if (!self::validateClass($class)) {
+                        if (ModelValidator::for($filename)->fails()) {
                             continue;
                         }
                         $models->push(new Model($class));
@@ -52,23 +51,6 @@ class Model
     private static function nonHiddenFiles($fullBasePath)
     {
         return preg_grep('/^([^.|^~])/', scandir($fullBasePath));
-    }
-
-    /**
-     * @param string $class
-     * @return bool
-     * */
-    private static function validateClass($class)
-    {
-        try {
-            if ((new ReflectionClass($class))->isAbstract()) {
-                return false;
-            }
-        } catch (Exception $e) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
