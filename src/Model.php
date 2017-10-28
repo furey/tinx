@@ -2,8 +2,6 @@
 
 namespace Ajthinking\Tinx;
 
-use Exception;
-
 class Model
 {
     public function __construct($classWithFullNamespace)

@@ -2,6 +2,7 @@
 
 namespace Ajthinking\Tinx;
 
+use Exception;
 use Illuminate\Support\Facades\File;
 
 class ModelValidator
