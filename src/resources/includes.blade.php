@@ -100,6 +100,7 @@ try {
     @endif
 }
 @endforeach
+unset($latestColumn);
 
 /**
  * Return quick reference array.

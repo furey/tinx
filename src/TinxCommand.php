@@ -7,6 +7,7 @@ use Ajthinking\Tinx\Model;
 use Ajthinking\Tinx\State;
 use Ajthinking\Tinx\IncludeManager;
 use Artisan;
+use Symfony\Component\Console\Input\InputArgument;
 
 class TinxCommand extends Command
 {
@@ -15,7 +16,8 @@ class TinxCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'tinx';
+    protected $signature = 'tinx
+                            {include?* : Include file(s) before starting tinker}';
 
     /**
      * The console command description.
@@ -45,14 +47,55 @@ class TinxCommand extends Command
 
         do {
             State::reset();
-            IncludeManager::prepare(Model::all());
-            Artisan::call('tinker', [
-                'include' => [
-                    app('tinx.storage')->path('includes.php')
-                ]
-            ]);
-        } while (State::shouldRestart() && !$this->info("Reloading your tinker session."));
+            $this->rebootConfig();
+            $this->createTinxIncludes();
+            $this->callTinker();
+        } while (State::shouldRestart() && !$this->info("Reloading your tinker session..."));
 
         State::reset();
+    }
+
+    /**
+     * @return void
+     * */
+    private function rebootConfig()
+    {
+        app('Illuminate\Foundation\Bootstrap\LoadConfiguration')->bootstrap($this->laravel);
+    }
+
+    /**
+     * @return void
+     * */
+    private function createTinxIncludes()
+    {
+        IncludeManager::prepare(Model::all());
+    }
+
+    /**
+     * @return void
+     * */
+    private function callTinker()
+    {
+        Artisan::call('tinker', ['include' => $this->getTinkerIncludes()]);
+    }
+
+    /**
+     * @return array
+     * */
+    private function getTinkerIncludes()
+    {
+        // Magic functions and variables.
+        $tinxIncludes = [
+            app('tinx.storage')->path('includes.php')
+        ];
+
+        // Files included by the user as command argument(s).
+        // e.g. "php artisan tinx include-1.php /path/to/include-2.php etc.php"
+        $commandIncludes = $this->argument('include') ?: [];
+
+        // Files includes by the user via config.
+        $configIncludes = config('tinx.include', []);
+
+        return array_merge($tinxIncludes, $commandIncludes, $configIncludes);
     }
 }

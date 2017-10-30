@@ -27,20 +27,19 @@ class Model
                 $results = self::nonHiddenFiles($fullBasePath);
                 foreach ($results as $result) {
                     $filename = $fullBasePath . '/' . $result;
-                    if (is_dir($filename)) {
-                        // Only model files may be present in subfolders; anything else will break it.
-                    } else {
+                    // Only model files may be present in subfolders; anything else will break it.
+                    if (!is_dir($filename)) {
                         $class = $namespace . '\\' . substr($result, 0, -4);
-                        if ((new \ReflectionClass($class))->isAbstract()) {
+                        if (ModelValidator::for($filename)->fails()) {
                             continue;
                         }
                         $models->push(new Model($class));
-
                     }
                 }
             }
         }
-        return $models;
+
+        return self::filterModels($models);
     }
 
     /**
@@ -49,7 +48,28 @@ class Model
      */
     private static function nonHiddenFiles($fullBasePath)
     {
-        return preg_grep('/^([^.])/', scandir($fullBasePath));
+        return preg_grep('/^([^.|^~])/', scandir($fullBasePath));
+    }
+
+    /**
+     * @param Collection $models
+     * @return Collection
+     * */
+    private static function filterModels($models)
+    {
+        if (($only = config('tinx.only', [])) && is_array($only) && count($only)) {
+            $models = $models->filter(function ($model) use ($only) {
+                return in_array($model->classWithFullNamespace, $only);
+            });
+        }
+
+        if (($except = config('tinx.except', [])) && is_array($except) && count($except)) {
+            $models = $models->reject(function ($model) use ($except) {
+                return in_array($model->classWithFullNamespace, $except);
+            });
+        }
+
+        return $models;
     }
 
     public function empty()
@@ -73,10 +93,5 @@ class Model
                 $this->sample()->getHidden()
             )
         );
-    }
-
-    public function hasTable()
-    {
-        //
     }
 }
