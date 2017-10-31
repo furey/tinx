@@ -86,7 +86,9 @@ try {
             return getQueryInstance('{!! $class !!}', ...$args);
         }
     }
-} catch (\Illuminate\Database\QueryException $e) {
+} catch (\Throwable $e) {
+    // Ignoring invalid class files (e.g. those that don't extend Model i.e. 'first()' is undefined, etc).  
+} catch (\Exception $e) {
     @if (array_get($config, 'tableless_models'))
     ${!! $name !!} = new {!! $class !!};
     ${!! $name !!}_ = new {!! $class !!};
