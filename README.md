@@ -16,7 +16,7 @@ Thats it. This package supports Laravel [Package Discovery](https://laravel.com/
 
 ### Reload your tinker session
     re()
-This will allow you to immediatly test out your changes.
+This will allow you to immediatly test out changes done by you.
 
 ### Magic models
 
