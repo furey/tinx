@@ -86,7 +86,7 @@ class TinxCommand extends Command
     {
         // Magic functions and variables.
         $tinxIncludes = [
-            app('tinx.storage')->path('includes.php')
+            $this->getStoragePath('includes.php'),
         ];
 
         // Files included by the user as command argument(s).
@@ -97,5 +97,18 @@ class TinxCommand extends Command
         $configIncludes = config('tinx.include', []);
 
         return array_merge($tinxIncludes, $commandIncludes, $configIncludes);
+    }
+
+    /**
+     * In Laravel 5.5 we'd simply "app('tinx.storage')->path('includes.php')",
+     * but to support older versions (e.g. L5.3), we'll manually implement the
+     * L5.5 Illuminate\Filesystem\FilesystemAdapter "path" method ourselves.
+     *
+     * @param string $path
+     * @return string
+     * */
+    private function getStoragePath($path)
+    {
+        return app('tinx.storage')->getDriver()->getAdapter()->getPathPrefix().'/'.$path;
     }
 }
