@@ -1,6 +1,6 @@
 {
     "name": "ajthinking/tinx",
-    "description": "Inject cool stuff into laravels tinker and make it restartable.",
+    "description": "Inject cool stuff into Laravel Tinker and make it restartable.",
     "type": "laravel",
     "license": "MIT",
     "authors": [

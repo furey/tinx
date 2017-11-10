@@ -2,8 +2,9 @@
 
 namespace Ajthinking\Tinx;
 
+use Ajthinking\Tinx\Console\TinxCommand;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use Ajthinking\Tinx\TinxCommand;
 
 class TinxServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,8 @@ class TinxServiceProvider extends ServiceProvider
         ]);
 
         $this->ignoreStorageFiles();
+
+        $this->setViewPaths();
     }
 
     /**
@@ -32,7 +35,7 @@ class TinxServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/tinx.php', 'tinx');
+        $this->mergeConfigFrom(__DIR__.'/../config/tinx.php', 'tinx');
 
         $this->configureStorageDisk();
     }
@@ -60,5 +63,17 @@ class TinxServiceProvider extends ServiceProvider
     private function ignoreStorageFiles()
     {
         app('tinx.storage')->put('.gitignore', '*'.PHP_EOL.'!.gitignore');
+    }
+
+    /**
+     * @return void
+     * */
+    private function setViewPaths()
+    {
+        $viewPath = __DIR__.'/../resources/views';
+
+        $viewFactory = $this->app['view'];
+        $viewFactory->addLocation($viewPath);
+        $viewFactory->addNamespace('tinx', $viewPath);
     }
 }

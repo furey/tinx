@@ -1,13 +1,11 @@
-use Ajthinking\Tinx\State;
+<?placeholder
 
-array_set($GLOBALS, 'tinx.names', {!! var_export($names); !!});
-
-function forgetName($class) {
-    array_forget($GLOBALS, "tinx.names.$class");
-}
+use Ajthinking\Tinx\Console\State;
 
 /**
- * The function used to restart tinker.
+ * Restarts Tinker.
+ *
+ * @return void
  * */
 function re() {
     State::requestRestart();
@@ -15,9 +13,40 @@ function re() {
 }
 
 /**
- * Helper to handle all u(x [y, z]) calls.
+ * Restart aliases.
  * */
-function getQueryInstance($class, ...$args)
+function reload() {
+    re();
+}
+function restart() {
+    re();
+}
+
+/**
+ * Renders the "Class/Shortcuts" names table.
+ *
+ * @return void
+ * */
+function names() {
+    event('tinx.names');
+}
+
+/**
+ * @param string $class
+ * @return void
+ * */
+function tinx_forget_name($class) {
+    array_forget($GLOBALS, "tinx.names.$class");
+}
+
+/**
+ * Magic query method to handle all "u(x [y, z])" calls.
+ *
+ * @param string $class
+ * @param mixed $args
+ * @return mixed
+ * */
+function tinx_query($class, ...$args)
 {
     $totalArgs = count($args);
 
@@ -46,7 +75,10 @@ function getQueryInstance($class, ...$args)
          * */
         if (is_string($arg)) {
             if ($class::first() === null) {
-                throw new Exception("You can only search where there is data. There is no way for Tinx to get a column listing for a model without an existing instance...");
+                throw new Exception(
+                    "You can only search where there is data. ".
+                    "There is no way for Tinx to get a column listing ".
+                    "for a model without an existing instance…");
             }
             $columns = Schema::getColumnListing($class::first()->getTable());
             $query = $class::select('*');
@@ -76,42 +108,26 @@ function getQueryInstance($class, ...$args)
  * For "first" variable, returns "::first()" if class DB table exists, otherwise "new" (if 'tableless_models' set to true).
  * For "last" variable, returns "::latest()->first()" if class DB table exists, otherwise "new" (if 'tableless_models' set to true).
  * */
-$latestColumn = config('tinx.latest_column', 'created_at');
+array_set($GLOBALS, 'tinx.names', {!! var_export($names); !!});
+$latestColumn = '{{ array_get($config, 'latest_column', 'created_at') }}';
 @foreach ($names as $class => $name)
-try {
-    ${!! $name !!} = {!! $class !!}::first() ?: new {!! $class !!};
-    ${!! $name !!}_ = {!! $class !!}::latest($latestColumn)->first() ?: new {!! $class !!};
-    if (!function_exists('{!! $name !!}')) {
-        function {!! $name !!}(...$args) {
-            return getQueryInstance('{!! $class !!}', ...$args);
+    try {
+        ${!! $name !!} = {!! $class !!}::first() ?: app('{!! $class !!}');
+        ${!! $name !!}_ = {!! $class !!}::latest($latestColumn)->first() ?: app('{!! $class !!}');
+        if (!function_exists('{!! $name !!}')) {
+            function {!! $name !!}(...$args) {
+                return tinx_query('{!! $class !!}', ...$args);
+            }
         }
+    } catch (Throwable $e) {
+        @include('tinx::on-name-error')
+    } catch (Exception $e) {
+        @include('tinx::on-name-error')
     }
-} catch (\Throwable $e) {
-    // Ignoring invalid class files (e.g. those that don't extend Model i.e. 'first()' is undefined, etc).  
-} catch (\Exception $e) {
-    @if (array_get($config, 'tableless_models'))
-    ${!! $name !!} = new {!! $class !!};
-    ${!! $name !!}_ = new {!! $class !!};
-    if (!function_exists('{!! $name !!}')) {
-        function {!! $name !!}(...$args) {
-            return '{!! $class !!}';
-        }
-    }
-    @else
-    forgetName('{!! $class !!}');
-    @endif
-}
 @endforeach
 unset($latestColumn);
 
 /**
- * Return quick reference array.
- * */
-function names() {
-    return array_get($GLOBALS, 'tinx.names');
-}
-
-/**
  * Quick reference array.
  * */
-$names = names();
+$names = array_get($GLOBALS, 'tinx.names');
