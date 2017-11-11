@@ -76,6 +76,12 @@ names()
 
 Your shortcuts will initially display only if your session satisfies the `names_table_limit` config value.
 
+To filter the shortcuts returned by `names()`, simply pass your filter terms like so:
+
+```
+names('car', 'user')
+```
+
 ## Configuration
 
 Tinx contains a number of helpful configuration options.
