@@ -9,8 +9,14 @@ use PHPUnit\Framework\TestCase;
 
 class NamingStrategyTest extends TestCase
 {
+    /**
+     * @var array
+     * */
     public $strategies;
 
+    /**
+     * @return void
+     * */
     public function setUp()
     {
         $this->strategies = [
@@ -21,7 +27,7 @@ class NamingStrategyTest extends TestCase
     }
 
     /** @test */
-    public function it_will_not_use_reserved_names_as_shortcuts()
+    function it_will_not_use_reserved_names_as_shortcuts()
     {
         $models = collect([
 

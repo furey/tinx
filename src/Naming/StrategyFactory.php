@@ -3,13 +3,15 @@
 namespace Ajthinking\Tinx\Naming;
 
 use Ajthinking\Tinx\Models\Models;
-use Ajthinking\Tinx\Naming\NamingStrategy;
+use Ajthinking\Tinx\Naming\Strategy;
 use Exception;
+use Illuminate\Container\Container;
+use Throwable;
 
 class StrategyFactory
 {
     /**
-     * @return \Ajthinking\Tinx\Naming\NamingStrategy
+     * @return \Ajthinking\Tinx\Naming\Strategy
      * */
     public static function makeDefault()
     {
@@ -21,27 +23,52 @@ class StrategyFactory
     }
 
     /**
-     * Accepts a string identifier (e.g. 'pascal') or any class implementing 'Ajthinking\Tinx\Naming\NamingStrategy'.
+     * Accepts a string identifier (e.g. 'pascal') or any class implementing 'Ajthinking\Tinx\Naming\Strategy'.
      *
      * @param string $strategy
-     * @return \Ajthinking\Tinx\Naming\NamingStrategy
+     * @return \Ajthinking\Tinx\Naming\Strategy
      * */
     public static function make($strategy, $models)
     {
         try {
-            $instance = app($strategy, [$models]);
-            if ($instance instanceof NamingStrategy) {
-                return $instance;
-            }
-            throw new Exception('Strategy must implement [Ajthinking\Tinx\Naming\NamingStrategy].');
+            return static::resolveViaContainer($strategy, $models);
         } catch (Exception $e) {
-            switch ($strategy) {
-                case 'shortestUnique':
-                    return new ShortestUniqueStrategy($models);
-                case 'pascal':
-                default:
-                    return new PascalStrategy($models);
-            }
+            return static::resolveViaIdentifier($strategy, $models);
+        }
+    }
+
+    /**
+     * @param string $strategy
+     * @return \Ajthinking\Tinx\Naming\Strategy
+     * @throws Exception
+     * */
+    private static function resolveViaContainer($strategy, $models)
+    {
+        /**
+         * This is the same as calling Laravel's "app()" helper,
+         * but we don't have that framework function available.
+         * */
+        $instance = Container::getInstance()->make($strategy, [$models]);
+
+        if ($instance instanceof Strategy) {
+            return $instance;
+        }
+
+        throw new Exception('Strategy must implement [Ajthinking\Tinx\Naming\Strategy].');
+    }
+
+    /**
+     * @param string $strategy
+     * @return \Ajthinking\Tinx\Naming\Strategy
+     * */
+    private static function resolveViaIdentifier($strategy, $models)
+    {
+        switch ($strategy) {
+            case 'shortestUnique':
+                return new ShortestUniqueStrategy($models);
+            case 'pascal':
+            default:
+                return new PascalStrategy($models);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Ajthinking\Tinx\Naming;
 
-class PascalStrategy implements NamingStrategy
+class PascalStrategy implements Strategy
 {
     /**
      * @var bool

@@ -58,6 +58,10 @@ class NamesTable
      * */
     public function render()
     {
+        if (0 === count($this->names)) {
+            return $this->command->warn("No models found (see: config/tinx.php > namespaces_and_paths).");
+        }
+
         $this->command->table($this->headers, $this->rows);
     }
 
@@ -68,12 +72,12 @@ class NamesTable
     {
         $totalNames = count($this->names);
 
-        if (0 === $totalNames) {
-            return false;
-        }
-
         if ($this->command->option('verbose')) {
             return true;
+        }
+
+        if (0 === $totalNames) {
+            return false;
         }
 
         $namesTableLimit = (int) config('tinx.names_table_limit', 10);

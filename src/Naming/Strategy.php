@@ -2,7 +2,7 @@
 
 namespace Ajthinking\Tinx\Naming;
 
-interface NamingStrategy
+interface Strategy
 {
     /**
      * @return array

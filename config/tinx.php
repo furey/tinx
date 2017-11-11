@@ -28,7 +28,7 @@ return [
 
     /**
      * Model variable/function naming strategy (e.g. 'User' ---> '$u'/'u()').
-     * Supported: 'pascal', 'shortestUnique', or any class implementing 'Ajthinking\Tinx\Naming\NamingStrategy'.
+     * Supported: 'pascal', 'shortestUnique', or any class implementing 'Ajthinking\Tinx\Naming\Strategy'.
      * */
     'strategy' => 'pascal',
 

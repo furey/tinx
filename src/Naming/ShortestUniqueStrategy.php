@@ -2,7 +2,7 @@
 
 namespace Ajthinking\Tinx\Naming;
 
-class ShortestUniqueStrategy implements NamingStrategy
+class ShortestUniqueStrategy implements Strategy
 {
     /**
      * @param \Illuminate\Support\Collection $models
