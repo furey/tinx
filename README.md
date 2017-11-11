@@ -7,7 +7,7 @@
 
 Reload your session from inside Tinker plus automatic super shortcuts for first(), find(), search, and more!
 
-<img src="https://i.imgur.com/MjTd9kG.gif" title="source: imgur.com" />
+<img src="https://i.imgur.com/U9NnDix.gif" title="source: imgur.com" />
 
 ## Installation
 
