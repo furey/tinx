@@ -11,7 +11,7 @@ Reload your session from inside Tinker plus automatic super shortcuts for first(
 
 ## Installation
 
-```bash
+```
 composer require ajthinking/tinx
 ```
 
@@ -19,13 +19,13 @@ That's it. This package supports Laravel [Package Discovery](https://laravel.com
 
 ## Usage
 
-```php
+```
 php artisan tinx
 ```
 
 ### Reload your Tinker session
 
-```bash
+```
 re()
 ```
 
@@ -70,7 +70,7 @@ The shortcuts defined for your session will display when Tinx loads and on subse
 
 To see your shortcuts from any time within your session, run:
 
-```bash
+```
 names()
 ```
 
@@ -81,13 +81,15 @@ Your shortcuts will only initially display if your session satisfies your `names
 
 #### Configuration
 
-Tinx contains a number helpful configuration options so you can tweak it to suit your needs.
+Tinx contains a number helpful configuration options.
 
 To publish Tinx's config file into your application, run:
 
-```php
+```
 php artisan vendor:publish --provider=Ajthinking\\Tinx\\TinxServiceProvider --force
 ```
+
+Once published, tweak your application `config/tinx.php` file to suit your needs:
 
 ```php
 <?php
