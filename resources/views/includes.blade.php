@@ -15,6 +15,9 @@ function re() {
 /**
  * Restart aliases.
  * */
+function reboot() {
+    re();
+}
 function reload() {
     re();
 }

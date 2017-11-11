@@ -23,7 +23,7 @@ class ForbiddenNames
         '__CLASS__', '__DIR__', '__FILE__', '__FUNCTION__', '__LINE__', '__METHOD__', '__NAMESPACE__', '__TRAIT__',
     
         // Used by Tinx.
-        're', 'reload', 'restart', 'names', 'tinx_forget_name', 'tinx_query'
+        're', 'reboot', 'reload', 'restart', 'names', 'tinx_forget_name', 'tinx_query'
 
     ];
 
