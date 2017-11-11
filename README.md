@@ -55,11 +55,11 @@ Tinx sniffs your models and prepares the following shortcuts.
 
 ### Naming strategy
 
-Tinx calculates its shortcut names via your `strategy` config value implementation.
+Tinx calculates shortcut names via the implementation defined by your `strategy` config value.
 
 Lets say you have two models: `Car` and `Crocodile`.
 
-If your naming `strategy` was set to **pascal** (default), Tinx would define the following shortcuts into your session:
+If your naming `strategy` was set to **pascal** (default), Tinx would define the following shortcuts in your session:
 
 - Car: `$c`, `$c_`, `c()`
 - Crocodile: `$cr`, `$cr_`, `cr()`
@@ -68,33 +68,28 @@ If your naming `strategy` was set to **pascal** (default), Tinx would define the
 
 The shortcuts defined for your session will display when Tinx loads and on subsequent reloads.
 
-To see your shortcuts from any time within your session, run:
+To see your shortcuts at any time during your session, run:
 
 ```
 names()
 ```
 
-Your shortcuts will only initially display if your session satisfies your `names_table_limit` config value.
+Your shortcuts will initially display only if your session satisfies the `names_table_limit` config value.
 
 ## Configuration
 
+Tinx contains a number of helpful configuration options.
 
-#### Configuration
-
-Tinx contains a number helpful configuration options.
-
-To publish Tinx's config file into your application, run:
+To personalise your Tinx installation, publish its config file by running:
 
 ```
 php artisan vendor:publish --provider=Ajthinking\\Tinx\\TinxServiceProvider --force
 ```
 
-Once published, tweak your application `config/tinx.php` file to suit your needs:
+Once published, edit `config/tinx.php` where appropriate to suit your needs:
 
 ```php
 <?php
-
-// 'config/tinx.php'
 
 return [
 
@@ -104,6 +99,7 @@ return [
     'namespaces_and_paths' => [
         'App' => '/app',
         'App\Models' => '/app/Models',
+        // 'Another\Namespace' => '/path/to/another/namespace/models'
     ],
 
     /**
@@ -123,18 +119,19 @@ return [
     ],
 
     /**
-     * Model variable/function naming strategy (e.g. 'User' ---> '$u'/'u()').
-     * Supported: 'pascal', 'shortestUnique', or any class implementing 'Ajthinking\Tinx\Naming\Strategy'.
+     * Model shortcut naming strategy (e.g. 'App\User' = '$u', 'u()').
+     * Supported: 'pascal', 'shortestUnique'
+     * Also supports any resolvable full class name implementing 'Ajthinking\Tinx\Naming\Strategy'.
      * */
     'strategy' => 'pascal',
 
     /**
-     * Last model variable (i.e. '$u_') "latest()" column name.
+     * Column name (e.g. 'id', 'created_at') used to determine last model shortcut (i.e. '$u_').
      * */
     'latest_column' => 'created_at',
 
     /**
-     * If true, models without database tables will also be defined.
+     * If true, models without database tables will also have shortcuts defined.
      * */
     'tableless_models' => false,
 
@@ -142,14 +139,15 @@ return [
      * Include these file(s) before starting tinker.
      * */
     'include' => [
-        // include/this/file.php,
-        // also/include/this/file.php,
+        // '/include/this/file.php',
+        // '/also/include/this/file.php',
     ],
 
     /**
      * Show the console 'Class/Shortcuts' table for up to this many model names, otherwise, hide it.
      * To always view the 'Class/Shortcuts' table regardless of the model name count,
-     * pass a 'verbose' flag on boot (e.g. "php artisan tinx -v"), or set this value to '-1'.
+     * pass a 'verbose' flag when booting Tinx (e.g. "php artisan tinx -v"),
+     * or set this value to '-1'.
      * */
     'names_table_limit' => 10,
     
