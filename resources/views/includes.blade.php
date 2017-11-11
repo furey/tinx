@@ -25,10 +25,11 @@ function restart() {
 /**
  * Renders the "Class/Shortcuts" names table.
  *
+ * @param array $args If passed, filters classes to these terms (e.g. "names('banana', 'carrot')").
  * @return void
  * */
-function names() {
-    event('tinx.names');
+function names(...$args) {
+    event('tinx.names', $args);
 }
 
 /**

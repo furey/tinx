@@ -90,8 +90,8 @@ class TinxCommand extends Command
      * */
     private function listenForNamesTable()
     {
-        app('events')->listen('tinx.names', function () {
-            NamesTable::for($this)->render();
+        app('events')->listen('tinx.names', function (...$args) {
+            NamesTable::for($this)->render(...$args);
         });
     }
 

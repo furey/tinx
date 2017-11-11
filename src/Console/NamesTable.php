@@ -21,26 +21,6 @@ class NamesTable
     {
         $this->command = $command;
         $this->names = $this->command->getNames();
-        $this->headers = $this->getHeaders();
-        $this->rows = $this->getRows();
-    }
-
-    /**
-     * @return array
-     * */
-    private function getHeaders()
-    {
-        return ['Class', 'Shortcuts'];
-    }
-
-    /**
-     * @return array
-     * */
-    private function getRows()
-    {
-        return collect($this->names)->map(function ($name, $class) {
-            return [$class, "\${$name}, \${$name}_, {$name}()"];
-        })->toArray();
     }
 
     /**
@@ -51,18 +31,6 @@ class NamesTable
         if ($this->shouldRender()) {
             $this->render();
         }
-    }
-
-    /**
-     * @return void
-     * */
-    public function render()
-    {
-        if (0 === count($this->names)) {
-            return $this->command->warn("No models found (see: config/tinx.php > namespaces_and_paths).");
-        }
-
-        $this->command->table($this->headers, $this->rows);
     }
 
     /**
@@ -91,5 +59,72 @@ class NamesTable
         }
 
         return false;
+    }
+
+    /**
+     * @param array $filters
+     * @return void
+     * */
+    public function render(...$filters)
+    {
+        if (0 === count($this->names)) {
+            return $this->command->warn("No models found (see: config/tinx.php > namespaces_and_paths).");
+        }
+
+        $rows = $this->getRows();
+
+        if ($filters) {
+            $rows = $this->filterRows($rows, $filters);
+            if (0 === count($rows)) {
+                return $this->command->warn($this->getFiltersWarning($filters));
+            }
+        }
+
+        $this->command->table($this->getHeaders(), $rows->toArray());
+    }
+
+        /**
+     * @return array
+     * */
+    private function getHeaders()
+    {
+        return ['Class', 'Shortcuts'];
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     * */
+    private function getRows()
+    {
+        return collect($this->names)->map(function ($name, $class) {
+            return [$class, "\${$name}, \${$name}_, {$name}()"];
+        });
+    }
+
+    /**
+     * @param \Illuminate\Support\Collection $rows
+     * @param array $filters
+     * @return \Illuminate\Support\Collection
+     * */
+    private function filterRows($rows, $filters = [])
+    {
+        $regex = '/'.implode('|', $filters).'/i';
+
+        return $rows->filter(function ($row) use ($regex) {
+            return preg_match($regex, $row[0]);
+        });
+    }
+
+    /**
+     * @param array $filters
+     * @return void
+     * */
+    private function getFiltersWarning($filters)
+    {
+        return sprintf(
+            'No classes found for %s [%s].',
+            str_plural('filter', count($filters)),
+            implode(', ', $filters)
+        );
     }
 }
