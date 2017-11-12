@@ -2,45 +2,53 @@
 
 namespace Ajthinking\Tinx\Tests;
 
+use Ajthinking\Tinx\Models\Model;
+use Ajthinking\Tinx\Naming\ForbiddenNames;
+use Ajthinking\Tinx\Naming\StrategyFactory;
 use PHPUnit\Framework\TestCase;
-use Ajthinking\Tinx\Model;
-use Ajthinking\Tinx\NamingStrategy;
 
 class NamingStrategyTest extends TestCase
 {
+    /**
+     * @var array
+     * */
     public $strategies;
 
+    /**
+     * @return void
+     * */
     public function setUp()
     {
         $this->strategies = [
-            "shortestUnique",
-            // Add your strategy here
+            'shortestUnique',
+            'pascal',
+            // Add your strategy here…
         ];
     }
 
     /** @test */
-    public function it_will_not_use_reserved_names_as_shortcuts()
+    function it_will_not_use_reserved_names_as_shortcuts()
     {
         $models = collect([
-            // shortest unique = "min" (forbidden!)            
+
+            // shortest unique = "min" (forbidden!)
             new Model("App\Mindblower"),
             new Model("App\Microscope"),
 
-            // PascalCase = "min" (forbidden!)
-            new Model("App\MaximumInstanceModel")
+            // pascal = "min" (forbidden!)
+            new Model("App\MaximumInstanceNode")
 
-            // Add more special cases here
+            // Add more special cases here?
             
             // Add ~1000 nouns from faker?
+
         ]);
 
-        foreach($this->strategies as $strategy)
-        {
-            $names = NamingStrategy::$strategy($models);
-            foreach($names as $name)
-            {
+        foreach ($this->strategies as $strategy) {
+            $names = StrategyFactory::make($strategy, $models)->getNames();
+            foreach ($names as $name) {
                 $this->assertTrue(!function_exists($name));
-                $this->assertTrue(!in_array($name, NamingStrategy::forbiddenNames));
+                $this->assertTrue(!ForbiddenNames::exists($name));
             }
         }
     }

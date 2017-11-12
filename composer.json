@@ -1,6 +1,6 @@
 {
     "name": "ajthinking/tinx",
-    "description": "Inject cool stuff into laravels tinker and make it restartable.",
+    "description": "Inject cool stuff into Laravel Tinker and make it restartable.",
     "type": "laravel",
     "license": "MIT",
     "authors": [
@@ -22,7 +22,8 @@
         }
     },
     "require": {
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "illuminate/container": "~5.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4"

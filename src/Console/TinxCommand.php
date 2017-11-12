@@ -1,13 +1,12 @@
 <?php
 
-namespace Ajthinking\Tinx;
+namespace Ajthinking\Tinx\Console;
 
+use Ajthinking\Tinx\Console\State;
+use Ajthinking\Tinx\Includes\IncludeManager;
+use Ajthinking\Tinx\Naming\StrategyFactory;
 use Illuminate\Console\Command;
-use Ajthinking\Tinx\Model;
-use Ajthinking\Tinx\State;
-use Ajthinking\Tinx\IncludeManager;
-use Artisan;
-use Symfony\Component\Console\Input\InputArgument;
+use Illuminate\Support\Facades\Artisan;
 
 class TinxCommand extends Command
 {
@@ -27,14 +26,9 @@ class TinxCommand extends Command
     protected $description = 'Inject cool stuff into tinker';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+     * @var array
+     * */
+    private $names;
 
     /**
      * Execute the console command.
@@ -43,12 +37,16 @@ class TinxCommand extends Command
      */
     public function handle()
     {
-        $this->info("Tinx - something awesome is about to happen.");
+        $this->info("Tinx – something awesome is about to happen.");
+
+        $this->listenForNamesTable();
 
         do {
             State::reset();
             $this->rebootConfig();
+            $this->setNames();
             $this->createTinxIncludes();
+            $this->conditionallyRenderNamesTable();
             $this->callTinker();
         } while (State::shouldRestart() && !$this->info("Reloading your tinker session..."));
 
@@ -66,9 +64,43 @@ class TinxCommand extends Command
     /**
      * @return void
      * */
+    private function setNames()
+    {
+        $this->names = StrategyFactory::makeDefault()->getNames();
+    }
+
+    /**
+     * @return array
+     * */
+    public function getNames()
+    {
+        return $this->names;
+    }
+
+    /**
+     * @return void
+     * */
     private function createTinxIncludes()
     {
-        IncludeManager::prepare(Model::all());
+        with(new IncludeManager)->generateIncludesFile($this->getNames());
+    }
+
+    /**
+     * @return void
+     * */
+    private function listenForNamesTable()
+    {
+        app('events')->listen('tinx.names', function (...$args) {
+            NamesTable::for($this)->render(...$args);
+        });
+    }
+
+    /**
+     * @return void
+     * */
+    private function conditionallyRenderNamesTable()
+    {
+        NamesTable::for($this)->conditionallyRender();
     }
 
     /**
@@ -84,16 +116,22 @@ class TinxCommand extends Command
      * */
     private function getTinkerIncludes()
     {
-        // Magic functions and variables.
+        /**
+         * Magic functions and variables.
+         * */
         $tinxIncludes = [
             $this->getStoragePath('includes.php'),
         ];
 
-        // Files included by the user as command argument(s).
-        // e.g. "php artisan tinx include-1.php /path/to/include-2.php etc.php"
+        /**
+         * Files included by the user as command argument(s).
+         * Example: "php artisan tinx include-1.php /path/to/include-2.php etc.php"
+         * */
         $commandIncludes = $this->argument('include') ?: [];
 
-        // Files includes by the user via config.
+        /**
+         * Files includes by the user via config.
+         * */
         $configIncludes = config('tinx.include', []);
 
         return array_merge($tinxIncludes, $commandIncludes, $configIncludes);

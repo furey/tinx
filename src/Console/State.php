@@ -1,30 +1,47 @@
 <?php
 
-namespace Ajthinking\Tinx;
+namespace Ajthinking\Tinx\Console;
 
 class State
 {
+    /**
+     * @return bool
+     * */
     public static function shouldRestart()
     {
-        return State::getStateFileMessage() == "RESTART";
+        return static::getStateFileMessage() == "RESTART";
     }
 
+    /**
+     * @return void
+     * */
     public static function requestRestart()
     {
-        State::setStateFileMessage("RESTART");
+        static::setStateFileMessage("RESTART");
     }
 
+    /**
+     * @return void
+     * */
     public static function reset()
     {
-        State::setStateFileMessage("TAKE_NO_ACTION");
+        static::setStateFileMessage("TAKE_NO_ACTION");
     }
 
+    /**
+     * @param string $message
+     * @return string
+     * */
     public static function setStateFileMessage($message)
     {
         app('tinx.storage')->put('state', $message);
+
         return $message;
     }
 
+    /**
+     * @return string
+     * */
     public static function getStateFileMessage()
     {
         return app('tinx.storage')->get('state');

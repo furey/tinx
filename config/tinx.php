@@ -3,11 +3,12 @@
 return [
 
     /**
-     * The namespaces relating base paths to search for models.
+     * The namespaces and relating base paths to search for models.
      * */
     'namespaces_and_paths' => [
         'App' => '/app',
         'App\Models' => '/app/Models',
+        // 'Another\Namespace' => '/path/to/another/namespace/models'
     ],
 
     /**
@@ -27,17 +28,19 @@ return [
     ],
 
     /**
-     * Model variable/function naming strategy (e.g. 'User' ---> '$u'/'u()').
+     * Model shortcut naming strategy (e.g. 'App\User' = '$u', 'u()').
+     * Supported: 'pascal', 'shortestUnique'
+     * Also supports any resolvable full class name implementing 'Ajthinking\Tinx\Naming\Strategy'.
      * */
-    'strategy' => 'shortestUnique',
+    'strategy' => 'pascal',
 
     /**
-     * Last model variable (i.e. '$u_') "latest()" (i.e. order by) column name.
+     * Column name (e.g. 'id', 'created_at') used to determine last model shortcut (i.e. '$u_').
      * */
     'latest_column' => 'created_at',
 
     /**
-     * If true, models without database tables will also be defined.
+     * If true, models without database tables will also have shortcuts defined.
      * */
     'tableless_models' => false,
 
@@ -45,8 +48,16 @@ return [
      * Include these file(s) before starting tinker.
      * */
     'include' => [
-        // include/this/file.php,
-        // also/include/this/file.php,
+        // '/include/this/file.php',
+        // '/also/include/this/file.php',
     ],
+
+    /**
+     * Show the console 'Class/Shortcuts' table for up to this many model names, otherwise, hide it.
+     * To always view the 'Class/Shortcuts' table regardless of the model name count,
+     * pass a 'verbose' flag when booting Tinx (e.g. "php artisan tinx -v"),
+     * or set this value to '-1'.
+     * */
+    'names_table_limit' => 10,
     
 ];
