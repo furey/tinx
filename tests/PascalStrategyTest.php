@@ -174,7 +174,7 @@ class PascalStrategyTest extends TestCase
     }
 
     /** @test */
-    function reserved_keywords_translate_to_()
+    function reserved_keywords_translate_to_unique_non_forbidden_pascal_names()
     {
         // Arrange…
         $models = $this->getModelsFor([
@@ -198,7 +198,7 @@ class PascalStrategyTest extends TestCase
     }
 
     /** @test */
-    function same_reserved_keywords_are_patched_appropriately()
+    function same_reserved_keywords_translate_to_unique_non_forbidden_pascal_names()
     {
         // Arrange…
         $models = $this->getModelsFor([
