@@ -100,12 +100,13 @@ Once published, edit `config/tinx.php` where appropriate to suit your needs:
 return [
 
     /**
-     * The namespaces and relating base paths to search for models.
+     * Base paths to search for models (paths ending in '*' search recursively).
      * */
-    'namespaces_and_paths' => [
-        'App' => '/app',
-        'App\Models' => '/app/Models',
-        // 'Another\Namespace' => '/path/to/another/namespace/models'
+    'model_paths' => [
+        '/app',
+        '/app/Models/*',
+        // '/also/search/this/directory',
+        // '/also/search/this/directory/recursively/*',
     ],
 
     /**
