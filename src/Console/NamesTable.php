@@ -68,7 +68,7 @@ class NamesTable
     public function render(...$filters)
     {
         if (0 === count($this->names)) {
-            return $this->command->warn("No models found (see: config/tinx.php > namespaces_and_paths).");
+            return $this->command->warn("No models found (see: config/tinx.php > model_paths).");
         }
 
         $rows = $this->getRows();

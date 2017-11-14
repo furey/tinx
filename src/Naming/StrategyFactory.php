@@ -17,7 +17,7 @@ class StrategyFactory
     {
         $strategy = config('tinx.strategy', 'pascal');
 
-        $models = new Models;
+        $models = with(new Models)->toBase();
 
         return static::make($strategy, $models);
     }
