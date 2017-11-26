@@ -159,7 +159,7 @@ class Models extends Collection
             return true;
         }
 
-        if (ModelValidator::for($filePath, $fullClassName)->fails()) {
+        if (ModelValidator::make($filePath, $fullClassName)->fails()) {
             return true;
         }
 

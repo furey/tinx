@@ -2,6 +2,7 @@
 
 namespace Ajthinking\Tinx\Console;
 
+use Ajthinking\Tinx\Console\NamesTable;
 use Ajthinking\Tinx\Console\State;
 use Ajthinking\Tinx\Includes\IncludeManager;
 use Ajthinking\Tinx\Naming\StrategyFactory;
@@ -91,7 +92,7 @@ class TinxCommand extends Command
     private function listenForNamesTable()
     {
         app('events')->listen('tinx.names', function (...$args) {
-            NamesTable::for($this)->render(...$args);
+            NamesTable::make($this)->render(...$args);
         });
     }
 
@@ -100,7 +101,7 @@ class TinxCommand extends Command
      * */
     private function conditionallyRenderNamesTable()
     {
-        NamesTable::for($this)->conditionallyRender();
+        NamesTable::make($this)->conditionallyRender();
     }
 
     /**

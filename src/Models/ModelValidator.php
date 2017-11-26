@@ -25,7 +25,7 @@ class ModelValidator
      * @param string $fullClassName
      * @return static
      * */
-    public static function for($filePath, $fullClassName)
+    public static function make($filePath, $fullClassName)
     {
         return new static($filePath, $fullClassName);
     }
@@ -112,7 +112,7 @@ class ModelValidator
     private function canInstantiate()
     {
         try {
-            $this->fullClassName::first() ?: app($this->fullClassName);
+            ${$this->fullClassName}::first() ?: app($this->fullClassName);
             return true;
         } catch (Throwable $e) {
             return $this->canInstantiateOnError();

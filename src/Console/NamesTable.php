@@ -8,7 +8,7 @@ class NamesTable
      * @param \Ajthinking\Tinx\Console\TinxCommand $command
      * @return void
      * */
-    public static function for(TinxCommand $command)
+    public static function make(TinxCommand $command)
     {
         return new static($command);
     }

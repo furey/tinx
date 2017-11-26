@@ -41,17 +41,17 @@ Aliases:
 
 Tinx sniffs your models and prepares the following shortcuts.
 
-| Example Shortcut            | Equals                                           |
-|:--------------------------- |:------------------------------------------------ |
-| `$u`                        | `App\User::first()`                              |
-| `$u_`                       | `App\User::latest()->first()`                    |
-| `$c`                        | `App\Models\Car::first()`                        |
-| `u(3)`                      | `App\User::find(3)`                              |
-| `u("gmail")`                | `Where "%gmail%" is found in any column.`        |
-| `u("mail", "jon@snow.com")` | `App\User::where("mail", "jon@snow.com")->get()` |
-| `u("id", ">", 0)`           | `App\User::where("id", ">", 0)->get()`           |
-| `u()`                       | `"App\User"`                                     |
-| `u()::whereRaw(...)`        | `App\User::whereRaw(...) // chain as needed`     |
+| Example Shortcut            | Equals                                              |
+|:--------------------------- |:--------------------------------------------------- |
+| `$u`                        | `App\User::first()`                                 |
+| `$u_`                       | `App\User::latest()->first()`                       |
+| `$c`                        | `App\Models\Car::first()`                           |
+| `u(3)`                      | `App\User::find(3)`                                 |
+| `u("gmail")`                | `Where "%gmail%" is found in any column.`           |
+| `u("mail", "jon@snow.com")` | `App\User::where("mail", "jon@snow.com")->get()`    |
+| `u("id", ">", 0)`           | `App\User::where("id", ">", 0)->get()`              |
+| `u()`                       | `"App\User"`                                        |
+| `u()::whereRaw(...)`        | `App\User::whereRaw(...) // Note: >= PHP 7.0 only`  |
 
 ### Naming strategy
 
