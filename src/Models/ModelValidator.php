@@ -112,7 +112,7 @@ class ModelValidator
     private function canInstantiate()
     {
         try {
-            ${$this->fullClassName}::first() ?: app($this->fullClassName);
+            call_user_func([$this->fullClassName, 'first']) ?: app($this->fullClassName);
             return true;
         } catch (Throwable $e) {
             return $this->canInstantiateOnError();
