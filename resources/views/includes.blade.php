@@ -1,4 +1,4 @@
-<?placeholder
+<php
 
 use Ajthinking\Tinx\Console\State;
 
