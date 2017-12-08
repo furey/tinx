@@ -131,7 +131,7 @@ class TinxCommand extends Command
         $commandIncludes = $this->argument('include') ?: [];
 
         /**
-         * Files includes by the user via config.
+         * Files included by the user via config.
          * */
         $configIncludes = config('tinx.include', []);
 

@@ -50,12 +50,18 @@ class NamesTable
 
         $namesTableLimit = (int) config('tinx.names_table_limit', 10);
 
-        if ($namesTableLimit === -1) {
+        if (-1 === $namesTableLimit) {
             return true;
         }
 
         if ($totalNames <= $namesTableLimit) {
             return true;
+        }
+
+        $this->command->warn($this->getLimitWarning($totalNames));
+
+        if ($totalNames > $namesTableLimit * 1.5) {
+            $this->command->line($this->getSearchHint());
         }
 
         return false;
@@ -117,14 +123,35 @@ class NamesTable
 
     /**
      * @param array $filters
-     * @return void
+     * @return string
      * */
     private function getFiltersWarning($filters)
     {
         return sprintf(
-            'No classes found for %s [%s].',
-            str_plural('filter', count($filters)),
+            'No class shortcuts found for search %s [%s].',
+            str_plural('term', count($filters)),
             implode(', ', $filters)
         );
+    }
+
+    /**
+     * @param string $totalNames
+     * @return string
+     * */
+    private function getLimitWarning($totalNames)
+    {
+        return sprintf(
+            '%d %s found (to view shortcuts on boot, see: config/tinx.php > names_table_limit).',
+            $totalNames,
+            str_plural('model', $totalNames)
+        );
+    }
+
+    /**
+     * @return string
+     * */
+    private function getSearchHint()
+    {
+        return 'Hint: Filter your model shortcuts by passing terms to "names()" e.g. "names(\'User\', \'Team\')" etc.';
     }
 }
