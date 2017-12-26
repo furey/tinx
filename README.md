@@ -11,19 +11,41 @@ Reload your session from inside Tinker, plus automatic shortcuts for first(), fi
 
 ## Installation
 
-```
+To install Tinx, simply require it via Composer:
+
+```bash
 composer require ajthinking/tinx
 ```
 
-That's it. This package supports Laravel [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery).
+If using Laravel <=5.4, register Tinx's service provider in `config/app.php` (Laravel >=5.5 [does this automatically](https://laravel.com/docs/5.5/packages#package-discovery)):
+
+```php
+<?php
+
+// 'config/app.php'
+
+return [
+    // etc…
+    'providers' => [
+        // etc…
+        Ajthinking\Tinx\TinxServiceProvider::class,
+        // etc…
+    ],
+    // etc…
+];
+```
 
 ## Usage
+
+From the command line, instead of running `php artisan tinker`, run:
 
 ```
 php artisan tinx
 ```
 
 ### Reload your Tinker session
+
+To reboot your current session, simply call:
 
 ```
 re()
@@ -39,7 +61,7 @@ Aliases:
 
 ### Magic models
 
-Tinx sniffs your models and prepares the following shortcuts.
+Tinx sniffs your models and prepares the following shortcuts:
 
 | Example Shortcut            | Equals                                              |
 |:--------------------------- |:--------------------------------------------------- |
@@ -96,6 +118,8 @@ Once published, edit `config/tinx.php` where appropriate to suit your needs:
 
 ```php
 <?php
+
+// 'config/tinx.php'
 
 return [
 
