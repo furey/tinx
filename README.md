@@ -150,11 +150,15 @@ return [
     ],
 
     /**
-     * Model shortcut naming strategy (e.g. 'App\User' = '$u', 'u()').
-     * Supported: 'pascal', 'shortestUnique'
-     * Also supports any resolvable full class name implementing 'Ajthinking\Tinx\Naming\Strategy'.
+     * Model shortcut naming strategy (e.g. 'App\User' = '$u', '$u_', 'u()').
+     * Supported values: 'pascal', 'shortestUnique'
      * */
     'strategy' => 'pascal',
+    /**
+     * Alternatively, you may pass a resolvable fully qualified class name
+     * implementing 'Ajthinking\Tinx\Naming\Strategy'.
+     * */
+    // 'strategy' => App\CustomNamingStrategy::class,
 
     /**
      * Column name (e.g. 'id', 'created_at') used to determine last model shortcut (i.e. '$u_').

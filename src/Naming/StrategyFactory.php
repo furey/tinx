@@ -47,8 +47,11 @@ class StrategyFactory
         /**
          * This is the same as calling Laravel's "app()" helper,
          * but we don't have that framework function available.
+         * The make method check supports legacy Laravel installs.
          * */
-        $instance = Container::getInstance()->make($strategy, [$models]);
+        $container = Container::getInstance();
+        $makeMethod = method_exists($container, 'makeWith') ? 'makeWith' : 'make';
+        $instance = $container->$makeMethod($strategy, ['models' => $models]);
 
         if ($instance instanceof Strategy) {
             return $instance;
