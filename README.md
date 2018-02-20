@@ -5,7 +5,7 @@
 
 [Laravel Tinker](https://github.com/laravel/tinker), <b>re()</b>loaded.
 
-Reload your session from inside Tinker, plus automatic shortcuts for first(), find(), search, and more!
+Reload your session from inside Tinker, plus magic shortcuts for first(), find(), where(), and more!
 
 <img src="https://i.imgur.com/U9NnDix.gif" title="source: imgur.com" />
 
