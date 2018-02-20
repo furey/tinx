@@ -1,7 +1,7 @@
 # Laravel Tinx
-[![Latest Stable Version](https://poser.pugx.org/ajthinking/tinx/v/stable)](https://packagist.org/packages/ajthinking/tinx)
-[![Total Downloads](https://poser.pugx.org/ajthinking/tinx/downloads)](https://packagist.org/packages/ajthinking/tinx)
-[![License](https://poser.pugx.org/ajthinking/tinx/license)](https://packagist.org/packages/ajthinking/tinx)
+[![Latest Stable Version](https://img.shields.io/packagist/v/ajthinking/tinx.svg)]()
+[![Total Downloads](https://img.shields.io/packagist/dt/ajthinking/tinx.svg)]()
+[![License](https://img.shields.io/packagist/l/ajthinking/tinx.svg)]()
 
 [Laravel Tinker](https://github.com/laravel/tinker), <b>re()</b>loaded.
 
