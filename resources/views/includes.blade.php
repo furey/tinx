@@ -58,7 +58,7 @@ function tinx_query($class, ...$args)
      * Zero arguments (i.e. u() returns "App\User").
      * */
     if ($totalArgs === 0) {
-        return $class; // Return a clean starting point for the query builder.
+        return $class; /* Return a clean starting point for the query builder. */
     }
 
     /**
