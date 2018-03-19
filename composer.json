@@ -1,12 +1,15 @@
 {
     "name": "ajthinking/tinx",
-    "description": "Inject cool stuff into Laravel Tinker and make it restartable.",
+    "description": "Reload your Laravel Tinker session from inside Tinker, plus magic shortcuts for first(), find(), where(), and more!",
     "type": "laravel",
     "license": "MIT",
     "authors": [
         {
             "name": "Anders Jürisoo",
             "email": "jurisoo@hotmail.com"
+        },
+        {
+            "name": "James Furey"
         }
     ],
     "extra": {
