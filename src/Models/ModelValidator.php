@@ -50,9 +50,6 @@ class ModelValidator
             if ($this->isAbstractClass()) {
                 return false;
             }
-            if ($this->cannotInstantiate()) {
-                return false;
-            }
         } catch (Exception $e) {
             return false;
         }
@@ -96,47 +93,5 @@ class ModelValidator
     private function getFileContents()
     {
         return File::get($this->filePath);
-    }
-
-    /**
-     * @return bool
-     * */
-    private function cannotInstantiate()
-    {
-        return false === $this->canInstantiate();
-    }
-
-    /**
-     * @return bool
-     * */
-    private function canInstantiate()
-    {
-        try {
-            call_user_func([$this->fullClassName, 'first']) ?: app($this->fullClassName);
-            return true;
-        } catch (Throwable $e) {
-            return $this->canInstantiateOnError();
-        } catch (Exception $e) {
-            return $this->canInstantiateOnError();
-        }
-    }
-
-    /**
-     * @return bool
-     * */
-    private function canInstantiateOnError()
-    {
-        if (false === $this->hasTablelessModels) {
-            return false;
-        }
-
-        try {
-            app($this->fullClassName);
-            return true;
-        } catch (Throwable $e) {
-            return false;
-        } catch (Exception $e) {
-            return false;
-        }
     }
 }
