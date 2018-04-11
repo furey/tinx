@@ -14,7 +14,7 @@ Reload your session from inside Tinker, plus magic shortcuts for first(), find()
 To install Tinx, simply require it via Composer:
 
 ```bash
-composer require ajthinking/tinx
+composer require --dev ajthinking/tinx
 ```
 
 If using Laravel <=5.4, register Tinx's service provider in `config/app.php` (Laravel >=5.5 [does this automatically](https://laravel.com/docs/5.5/packages#package-discovery)):
@@ -185,7 +185,7 @@ return [
      * or set this value to '-1'.
      * */
     'names_table_limit' => 10,
-    
+
 ];
 ```
 
@@ -196,7 +196,7 @@ Please post issues and send PRs.
 ### Suggested improvments
 
 * Add more tests (currently only naming tests are implemented).
-* Eloquent should support static calls to `getColumnListing`. Workaround? 
+* Eloquent should support static calls to `getColumnListing`. Workaround?
 
 ## License
 
