@@ -62,7 +62,9 @@ class TinxServiceProvider extends ServiceProvider
      * */
     private function ignoreStorageFiles()
     {
-        app('tinx.storage')->put('.gitignore', '*'.PHP_EOL.'!.gitignore');
+        if (!app('tinx.storage')->exists('.gitignore')) {
+            app('tinx.storage')->put('.gitignore', '*'.PHP_EOL.'!.gitignore');
+        }
     }
 
     /**
