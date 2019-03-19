@@ -53,11 +53,15 @@ re()
 
 This will allow you to immediately test out your application's code changes.
 
-Aliases:
+Aliases: `reboot()`, `reload()`, `restart()`.
 
-- `reboot()`
-- `reload()`
-- `restart()`
+To regenerate Composer's optimized autoload files before rebooting your current session, call:
+
+```
+reo()
+```
+
+Calling `reo()` simply runs `composer dump -o` before `re()`, ensuring any new classes added to your codebase since starting Tinx are automatically aliasable/resolvable by Laravel Tinker.
 
 ### Magic models
 
@@ -192,11 +196,6 @@ return [
 ## Contributing
 
 Please post issues and send PRs.
-
-### Suggested improvments
-
-* Add more tests (currently only naming tests are implemented).
-* Eloquent should support static calls to `getColumnListing`. Workaround?
 
 ## License
 

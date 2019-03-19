@@ -13,14 +13,26 @@ function re() {
 }
 
 /**
- * Restart aliases.
+ * Regenerate Composer's optimized autoload files before restarting Tinker.
+ *
+ * @return void
+ * */
+function reo() {
+    exec("composer dump -o");
+    re();
+}
+
+/**
+ * Aliases.
  * */
 function reboot() {
     re();
 }
+
 function reload() {
     re();
 }
+
 function restart() {
     re();
 }
