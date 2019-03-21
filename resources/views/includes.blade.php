@@ -130,15 +130,16 @@ $latestColumn = '{{ array_get($config, 'latest_column', 'created_at') }}';
     try {
         ${!! $name !!} = {!! $class !!}::first() ?: app('{!! $class !!}');
         ${!! $name !!}_ = {!! $class !!}::latest($latestColumn)->first() ?: app('{!! $class !!}');
-        if (!function_exists('{!! $name !!}')) {
-            function {!! $name !!}(...$args) {
-                return tinx_query('{!! $class !!}', ...$args);
-            }
-        }
     } catch (Throwable $e) {
         @include('tinx::on-name-error')
     } catch (Exception $e) {
         @include('tinx::on-name-error')
+    }
+    
+    if (!function_exists('{!! $name !!}')) {
+        function {!! $name !!}(...$args) {
+            return tinx_query('{!! $class !!}', ...$args);
+        }
     }
 @endforeach
 unset($latestColumn);
