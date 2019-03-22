@@ -132,15 +132,15 @@ $latestColumn = '{{ array_get($config, 'latest_column', 'created_at') }}';
         ${!! $name !!}_ = {!! $class !!}::latest($latestColumn)->first() ?: app('{!! $class !!}');
         array_set($GLOBALS, 'tinx.shortcuts.{!! $name !!}', ${!! $name !!});
         array_set($GLOBALS, 'tinx.shortcuts.{!! $name !!}_', ${!! $name !!}_);
+        if (!function_exists('{!! $name !!}')) {
+            function {!! $name !!}(...$args) {
+                return tinx_query('{!! $class !!}', ...$args);
+            }
+        }
     } catch (Throwable $e) {
         @include('tinx::on-name-error')
     } catch (Exception $e) {
         @include('tinx::on-name-error')
-    }
-    if (!function_exists('{!! $name !!}')) {
-        function {!! $name !!}(...$args) {
-            return tinx_query('{!! $class !!}', ...$args);
-        }
     }
 @endforeach
 unset($latestColumn);
