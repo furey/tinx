@@ -20,7 +20,7 @@ class NamesTable
     private function __construct(TinxCommand $command)
     {
         $this->command = $command;
-        $this->names = $this->command->getNames();
+        $this->names = array_get($GLOBALS, 'tinx.names');
     }
 
     /**
@@ -102,8 +102,8 @@ class NamesTable
      * */
     private function getRows()
     {
-        return collect($this->names)->map(function ($name, $class) {
-            return [$class, "\${$name}, \${$name}_, {$name}()"];
+        return collect($this->names)->map(function ($shortcuts, $class) {
+            return [$class, $shortcuts];
         });
     }
 

@@ -47,7 +47,6 @@ class TinxCommand extends Command
             $this->rebootConfig();
             $this->setNames();
             $this->createTinxIncludes();
-            $this->conditionallyRenderNamesTable();
             $this->callTinker();
         } while (State::shouldRestart() && !$this->info("Reloading your tinker session..."));
 
@@ -71,19 +70,11 @@ class TinxCommand extends Command
     }
 
     /**
-     * @return array
-     * */
-    public function getNames()
-    {
-        return $this->names;
-    }
-
-    /**
      * @return void
      * */
     private function createTinxIncludes()
     {
-        with(new IncludeManager)->generateIncludesFile($this->getNames());
+        with(new IncludeManager)->generateIncludesFile($this->names);
     }
 
     /**
@@ -94,14 +85,10 @@ class TinxCommand extends Command
         app('events')->listen('tinx.names', function (...$args) {
             NamesTable::make($this)->render(...$args);
         });
-    }
 
-    /**
-     * @return void
-     * */
-    private function conditionallyRenderNamesTable()
-    {
-        NamesTable::make($this)->conditionallyRender();
+        app('events')->listen('tinx.names.conditional', function (...$args) {
+            NamesTable::make($this)->conditionallyRender();
+        });
     }
 
     /**
