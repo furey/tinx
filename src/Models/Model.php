@@ -2,6 +2,8 @@
 
 namespace Ajthinking\Tinx\Models;
 
+use Illuminate\Support\Str;
+
 class Model
 {
     /**
@@ -13,7 +15,7 @@ class Model
         $this->fullClassName = $fullClassName;
         $this->shortClassName = class_basename($this->fullClassName);
         $this->namespace = trim(preg_replace("/{$this->shortClassName}$/", '', $this->fullClassName), '\\');
-        $this->shortClassNameSlug = str_slug($this->shortClassName);
+        $this->shortClassNameSlug = Str::slug($this->shortClassName);
         $this->shortClassNameWords = $this->getWordsFromString($this->shortClassName);
     }
 
@@ -23,6 +25,6 @@ class Model
      * */
     private function getWordsFromString($string)
     {
-        return preg_split('/_|(\d+)/u', snake_case($string), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        return preg_split('/_|(\d+)/u', Str::snake($string), -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
     }
 }

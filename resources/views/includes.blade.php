@@ -1,6 +1,7 @@
 <php
 
 use Ajthinking\Tinx\Console\State;
+use Illuminate\Support\Arr;
 
 /**
  * Restarts Tinker.
@@ -52,7 +53,7 @@ function names(...$args) {
  * @return void
  * */
 function tinx_forget_name($class) {
-    array_forget($GLOBALS, "tinx.names.$class");
+    Arr::forget($GLOBALS, "tinx.names.$class");
 }
 
 /**
@@ -124,14 +125,14 @@ function tinx_query($class, ...$args)
  * For "first" variable, returns "::first()" if class DB table exists, otherwise "new" (if 'tableless_models' set to true).
  * For "last" variable, returns "::latest()->first()" if class DB table exists, otherwise "new" (if 'tableless_models' set to true).
  * */
-array_set($GLOBALS, 'tinx.names', {!! var_export($names); !!});
-$latestColumn = '{{ array_get($config, 'latest_column', 'created_at') }}';
+Arr::set($GLOBALS, 'tinx.names', {!! var_export($names); !!});
+$latestColumn = '{{ Arr::get($config, 'latest_column', 'created_at') }}';
 @foreach ($names as $class => $name)
     try {
         ${!! $name !!} = {!! $class !!}::first() ?: app('{!! $class !!}');
         ${!! $name !!}_ = {!! $class !!}::latest($latestColumn)->first() ?: app('{!! $class !!}');
-        array_set($GLOBALS, 'tinx.shortcuts.{!! $name !!}', ${!! $name !!});
-        array_set($GLOBALS, 'tinx.shortcuts.{!! $name !!}_', ${!! $name !!}_);
+        Arr::set($GLOBALS, 'tinx.shortcuts.{!! $name !!}', ${!! $name !!});
+        Arr::set($GLOBALS, 'tinx.shortcuts.{!! $name !!}_', ${!! $name !!}_);
         if (!function_exists('{!! $name !!}')) {
             function {!! $name !!}(...$args) {
                 return tinx_query('{!! $class !!}', ...$args);
@@ -148,19 +149,19 @@ unset($latestColumn);
 /**
  * Quick names reference array.
  * */
-$names = array_get($GLOBALS, 'tinx.names');
+$names = Arr::get($GLOBALS, 'tinx.names');
 
 /**
  * Define shortcuts for "names()" table, and also set quick shortcuts reference array.
  * */
 $shortcuts = collect($names)->map(function ($name, $class) {
     $shortcuts = [];
-    if (array_has($GLOBALS, "tinx.shortcuts.$name")) $shortcuts[] = "\${$name}";
-    if (array_has($GLOBALS, "tinx.shortcuts.{$name}_")) $shortcuts[] = "\${$name}_";
+    if (Arr::has($GLOBALS, "tinx.shortcuts.$name")) $shortcuts[] = "\${$name}";
+    if (Arr::has($GLOBALS, "tinx.shortcuts.{$name}_")) $shortcuts[] = "\${$name}_";
     if (function_exists($name)) $shortcuts[] = "{$name}()";
     return implode(', ', $shortcuts);
 })->all();
-array_set($GLOBALS, 'tinx.names', $shortcuts);
+Arr::set($GLOBALS, 'tinx.names', $shortcuts);
 
 /**
  * Conditionally render the "Class/Shortcuts" names table.

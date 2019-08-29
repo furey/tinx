@@ -2,6 +2,8 @@
 
 namespace Ajthinking\Tinx\Console;
 
+use Illuminate\Support\Arr;
+
 class NamesTable
 {
     /**
@@ -20,7 +22,7 @@ class NamesTable
     private function __construct(TinxCommand $command)
     {
         $this->command = $command;
-        $this->names = array_get($GLOBALS, 'tinx.names');
+        $this->names = Arr::get($GLOBALS, 'tinx.names');
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Ajthinking\Tinx\Includes;
 
+use Illuminate\Support\Str;
+
 class IncludeManager
 {
     /**
@@ -14,7 +16,7 @@ class IncludeManager
 
         $contents = view('tinx::includes', compact('names', 'config'))->render();
 
-        $contents = str_replace_first('<php', '<?php', $contents);
+        $contents = Str::replaceFirst('<php', '<?php', $contents);
 
         app('tinx.storage')->put('includes.php', $contents);
     }

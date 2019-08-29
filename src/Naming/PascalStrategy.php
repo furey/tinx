@@ -2,6 +2,8 @@
 
 namespace Ajthinking\Tinx\Naming;
 
+use Illuminate\Support\Arr;
+
 class PascalStrategy implements Strategy
 {
     /**
@@ -126,7 +128,7 @@ class PascalStrategy implements Strategy
             $conflictingModel = $causalModel;
             $this->dump("Can't set [{$causalModel->fullClassName}] due to forbidden name [$conflictingName].");
         } else {
-            $conflictingModel = array_get($this->names, $conflictingName, $causalModel);
+            $conflictingModel = Arr::get($this->names, $conflictingName, $causalModel);
             $this->dump("Can't set [{$causalModel->fullClassName}] as [$conflictingName] due to [{$conflictingModel->fullClassName}].");
         }
 

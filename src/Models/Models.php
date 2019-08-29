@@ -3,7 +3,9 @@
 namespace Ajthinking\Tinx\Models;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class Models extends Collection
 {
@@ -51,7 +53,7 @@ class Models extends Collection
         foreach ($modelFilePaths as $modelFilePath) {
             $absoluteFilePath = $this->getAbsoluteFilePath($modelFilePath);
             $recursive = false;
-            if (ends_with($absoluteFilePath, '*')) {
+            if (Str::endsWith($absoluteFilePath, '*')) {
                 $absoluteFilePath = rtrim($absoluteFilePath, '/*');
                 $recursive = true;
             }
@@ -107,7 +109,7 @@ class Models extends Collection
             // Fail silently…
         }
 
-        $namespace = array_get($matches, 1);
+        $namespace = Arr::get($matches, 1);
 
         if (null === $namespace) {
             return null;

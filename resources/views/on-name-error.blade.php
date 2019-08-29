@@ -1,9 +1,15 @@
-@if ((bool) array_get($config, 'tableless_models') === true)
+<?php
+
+use Illuminate\Support\Arr;
+
+?>
+
+@if ((bool) Arr::get($config, 'tableless_models') === true)
     try {
         ${!! $name !!} = app('{!! $class !!}');
         ${!! $name !!}_ = app('{!! $class !!}');
-        array_set($GLOBALS, 'tinx.shortcuts.{!! $name !!}', ${!! $name !!});
-        array_set($GLOBALS, 'tinx.shortcuts.{!! $name !!}_', ${!! $name !!}_);
+        Arr::set($GLOBALS, 'tinx.shortcuts.{!! $name !!}', ${!! $name !!});
+        Arr::set($GLOBALS, 'tinx.shortcuts.{!! $name !!}_', ${!! $name !!}_);
         if (!function_exists('{!! $name !!}')) {
             function {!! $name !!}(...$args) {
                 return '{!! $class !!}';
