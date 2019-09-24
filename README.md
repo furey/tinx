@@ -85,7 +85,7 @@ Tinx calculates shortcut names via the implementation defined by your `strategy`
 
 Lets say you have two models: `Car` and `Crocodile`.
 
-If your naming `strategy` was set to **pascal** (default), Tinx would define the following shortcuts in your session:
+If your naming `strategy` was set to `pascal` (default), Tinx would define the following shortcuts in your session:
 
 - Car: `$c`, `$c_`, `c()`
 - Crocodile: `$cr`, `$cr_`, `cr()`
@@ -107,6 +107,20 @@ To filter the shortcuts returned by `names()`, simply pass your filter terms lik
 ```
 names('car', 'user')
 ```
+
+### Fast factories
+
+Shortcut methods are a great way to create factory models fast.
+
+```php
+// Instead of this…
+factory(App\User::class)->create()
+
+// …try substituting a shortcut method, like this:
+factory(u())->create()
+```
+
+When tinkering, every keystroke counts!
 
 ## Configuration
 
