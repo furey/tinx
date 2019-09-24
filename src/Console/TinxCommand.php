@@ -6,6 +6,7 @@ use Ajthinking\Tinx\Console\NamesTable;
 use Ajthinking\Tinx\Console\State;
 use Ajthinking\Tinx\Includes\IncludeManager;
 use Ajthinking\Tinx\Naming\StrategyFactory;
+use Illuminate\Config\Repository;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
@@ -58,7 +59,11 @@ class TinxCommand extends Command
      * */
     private function rebootConfig()
     {
+        $old = config()->all();
         app('Illuminate\Foundation\Bootstrap\LoadConfiguration')->bootstrap($this->laravel);
+        $new = config()->all();
+        $items = array_replace_recursive($old, $new);
+        $this->laravel->instance('config', new Repository($items));
     }
 
     /**
