@@ -126,7 +126,7 @@ function tinx_query($class, ...$args)
  * For "last" variable, returns "::latest()->first()" if class DB table exists, otherwise "new" (if 'tableless_models' set to true).
  * */
 Arr::set($GLOBALS, 'tinx.names', {!! var_export($names); !!});
-$latestColumn = '{{ Arr::get($config, 'latest_column', 'created_at') }}';
+$latestColumn = '{{ Illuminate\Support\Arr::get($config, 'latest_column', 'created_at') }}';
 @foreach ($names as $class => $name)
     try {
         ${!! $name !!} = {!! $class !!}::first() ?: app('{!! $class !!}');
