@@ -9,6 +9,19 @@ Reload your session from inside Tinker, plus magic shortcuts for first(), find()
 
 <img src="https://i.imgur.com/U9NnDix.gif" title="source: imgur.com" />
 
+## Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+  * [Reload your Tinker session](#reload-your-tinker-session)
+  * [Magic models](#magic-models)
+  * [Naming strategy](#naming-strategy)
+  * [Names](#names)
+  * [Fast factories](#fast-factories)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [License](#license)
+  
 ## Installation
 
 To install Tinx, simply require it via Composer:
