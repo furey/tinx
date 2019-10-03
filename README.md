@@ -9,6 +9,8 @@ Reload your session from inside Tinker, plus magic shortcuts for first(), find()
 
 <img src="https://i.imgur.com/U9NnDix.gif" title="source: imgur.com" />
 
+## Contents
+
 - [Installation](#installation)
 - [Usage](#usage)
   * [Reload your Tinker session](#reload-your-tinker-session)
