@@ -20,7 +20,7 @@ $ . tinx.sh
 
 While your Tinker session is running, press:
 
-- <kbd>Ctrl</kbd> + <kbd>Z</kbd> to **reload** your session
+- <kbd>Ctrl</kbd> + <kbd>D</kbd> from an empty prompt to **reload** your session
 - <kbd>Ctrl</kbd> + <kbd>C</kbd> to **exit** your session
 
 Can't see newly created classes in Tinker?
