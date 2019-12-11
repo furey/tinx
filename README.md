@@ -1,7 +1,45 @@
+# ⛔️ L̶a̶r̶a̶v̶e̶l̶ ̶T̶i̶n̶x̶
+[![No Maintenance Intended](./readme/unmaintained.svg)](http://unmaintained.tech/)
+
+**Laravel Tinx** was archived on 12th December 2019 and is no longer maintained.
+
+Looking for a reloadable version of [Laravel Tinker](https://github.com/laravel/tinker)?
+
+Save the following script as `tinx.sh` to your project root directory:
+
+```bash
+#!/bin/sh
+while true; do php artisan tinker; done
+```
+
+Run the script to launch a reloadable version of Tinker:
+
+```console
+$ . tinx.sh
+```
+
+While your Tinker session is running, press:
+
+- <kbd>Ctrl</kbd> + <kbd>Z</kbd> to **reload** your session
+- <kbd>Ctrl</kbd> + <kbd>C</kbd> to **exit** your session
+
+Can't see newly created classes in Tinker?
+
+Exit your Tinker session and run:
+
+```console
+$ composer dump -o
+```
+
+Thanks for loving [Laravel](https://laravel.com), and thanks for digging Tinx.
+
+Happy coding!
+
+🤓👋
+
+---
+
 # Laravel Tinx
-[![Latest Stable Version](https://img.shields.io/packagist/v/ajthinking/tinx.svg)](https://packagist.org/packages/ajthinking/tinx)
-[![Total Downloads](https://img.shields.io/packagist/dt/ajthinking/tinx.svg)](https://packagist.org/packages/ajthinking/tinx)
-[![License](https://img.shields.io/packagist/l/ajthinking/tinx.svg)](https://packagist.org/packages/ajthinking/tinx)
 
 [Laravel Tinker](https://github.com/laravel/tinker), <b>re()</b>loaded.
 
