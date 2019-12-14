@@ -1,4 +1,5 @@
-# ⛔️ L̶a̶r̶a̶v̶e̶l̶ ̶T̶i̶n̶x̶
+# ⛔️ Laravel Tinx (Deprecated)
+
 [![No Maintenance Intended](./readme/unmaintained.svg)](http://unmaintained.tech/)
 
 **Laravel Tinx** was archived on 12th December 2019 and is no longer maintained.
